@@ -12,6 +12,7 @@
 		D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE341C25CABD005D6980 /* BSServiceSync.swift */; };
 		D08AEE381C25CE92005D6980 /* ServicesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = D08AEE371C25CE92005D6980 /* ServicesResponse.json */; };
 		D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE391C275716005D6980 /* FixtureHelper.swift */; };
+		D08AEE3F1C289C65005D6980 /* BSPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */; };
 		D0D323C61C1E257E00B2EA83 /* BikeshareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0D323CD1C1E257E00B2EA83 /* BikeshareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */; };
 		D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D323D11C1E257E00B2EA83 /* BSServicesSyncTest.swift */; };
@@ -84,6 +85,7 @@
 		D08AEE341C25CABD005D6980 /* BSServiceSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServiceSync.swift; sourceTree = "<group>"; };
 		D08AEE371C25CE92005D6980 /* ServicesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServicesResponse.json; sourceTree = "<group>"; };
 		D08AEE391C275716005D6980 /* FixtureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixtureHelper.swift; sourceTree = "<group>"; };
+		D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPreferencesTests.swift; sourceTree = "<group>"; };
 		D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BikeshareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BikeshareKit.h; sourceTree = "<group>"; };
 		D0D323C71C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -190,9 +192,10 @@
 		D0D323D01C1E257E00B2EA83 /* BikeshareKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				D08AEE3D1C2898A8005D6980 /* SyncTests */,
-				D08AEE361C25CE62005D6980 /* MockResponses */,
 				D0D323D31C1E257E00B2EA83 /* Info.plist */,
+				D08AEE361C25CE62005D6980 /* MockResponses */,
+				D08AEE3D1C2898A8005D6980 /* SyncTests */,
+				D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */,
 			);
 			path = BikeshareKitTests;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08AEE3F1C289C65005D6980 /* BSPreferencesTests.swift in Sources */,
 				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */,
 				D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */,
 			);

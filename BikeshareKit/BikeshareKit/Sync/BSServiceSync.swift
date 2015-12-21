@@ -15,7 +15,7 @@ extension BSManager {
             .responseJSON(completionHandler: self.syncServicesCompletionHandler(callback))
     }
 
-    public func syncServicesCompletionHandler(callback: ((NSError?) -> Void)?) -> (Response<AnyObject, NSError> -> Void) {
+    internal func syncServicesCompletionHandler(callback: ((NSError?) -> Void)?) -> (Response<AnyObject, NSError> -> Void) {
         return {[weak self](response) -> Void in
             switch response.result {
             case .Success(let JSON):
@@ -34,6 +34,7 @@ extension BSManager {
             let servicesToRemove = self.services.subtract(retrievedServices)
             self.services.unionInPlace(retrievedServices)
             self.services.subtractInPlace(servicesToRemove)
+            self.favoriteService = self.services.filter{$0 == self.favoriteService}.first
 
             servicesUpdatedAt = NSDate()
             return nil

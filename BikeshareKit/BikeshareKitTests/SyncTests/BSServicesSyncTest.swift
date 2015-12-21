@@ -94,4 +94,21 @@ class BSServicesSyncTests: XCTestCase {
             XCTAssertFalse(self.manager.services.contains(outdatedService))
         })
     }
+
+    //depends on BSPreferencesTests
+    func testServicesSyncUpdatesFavoriteService() {
+        let favoriteService = BSService(id: 1, data: ["name": "out of date name"])
+        manager.services = [favoriteService]
+        manager.favoriteService = manager.services.first
+
+        let expectation = expectationWithDescription("Mock response arrived")
+        manager.syncServicesCompletionHandler({(error) in
+            expectation.fulfill()
+        })(mockResponse)
+
+        waitForExpectationsWithTimeout(10, handler: { _ -> Void in
+            XCTAssertNotNil(self.manager.favoriteService)
+            XCTAssertEqual(self.manager.favoriteService?.name, "divvy")
+        })
+    }
 }
