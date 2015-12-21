@@ -56,4 +56,5 @@ class BSPreferencesTests: XCTestCase {
 
         XCTAssertEqual(newManager.favoriteService?.name, newName)
     }
+
 }

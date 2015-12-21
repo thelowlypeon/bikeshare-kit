@@ -29,12 +29,8 @@ public class BSManager: NSObject {
     }
 
     public dynamic var favoriteService: BSService? {
-        set(service) {
-            self.favoriteServiceID = service?.id
-        }
-        get {
-            return self.services.filter{$0.id == self.favoriteServiceID}.first
-        }
+        set(service) { self.favoriteServiceID = service?.id }
+        get { return self.services.filter{$0.id == self.favoriteServiceID}.first }
     }
 
     override public init() {
