@@ -15,9 +15,13 @@
 		D08AEE3F1C289C65005D6980 /* BSPersistentServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE3E1C289C65005D6980 /* BSPersistentServicesTests.swift */; };
 		D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */; };
 		D08AEE451C29CA6A005D6980 /* BSPersistentServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE441C29CA6A005D6980 /* BSPersistentServices.swift */; };
+		D08AEE471C29CD32005D6980 /* StationsResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = D08AEE461C29CD32005D6980 /* StationsResponse.json */; };
+		D08AEE491C29CD5A005D6980 /* BSStationsSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */; };
+		D08AEE4B1C29CDA7005D6980 /* BSStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE4A1C29CDA7005D6980 /* BSStation.swift */; };
+		D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */; };
 		D0D323C61C1E257E00B2EA83 /* BikeshareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0D323CD1C1E257E00B2EA83 /* BikeshareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */; };
-		D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D323D11C1E257E00B2EA83 /* BSServicesSyncTest.swift */; };
+		D0D323D21C1E257E00B2EA83 /* BSServicesSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */; };
 		D0EB083B1C1E2D520012739C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EB082E1C1E2D100012739C /* Alamofire.framework */; };
 		D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB083C1C1E2DAB0012739C /* BSManager.swift */; };
 /* End PBXBuildFile section */
@@ -90,11 +94,15 @@
 		D08AEE3E1C289C65005D6980 /* BSPersistentServicesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentServicesTests.swift; sourceTree = "<group>"; };
 		D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServicesKVOTests.swift; sourceTree = "<group>"; };
 		D08AEE441C29CA6A005D6980 /* BSPersistentServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentServices.swift; sourceTree = "<group>"; };
+		D08AEE461C29CD32005D6980 /* StationsResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StationsResponse.json; sourceTree = "<group>"; };
+		D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationsSyncTests.swift; sourceTree = "<group>"; };
+		D08AEE4A1C29CDA7005D6980 /* BSStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStation.swift; sourceTree = "<group>"; };
+		D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationSync.swift; sourceTree = "<group>"; };
 		D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BikeshareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BikeshareKit.h; sourceTree = "<group>"; };
 		D0D323C71C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0D323CC1C1E257E00B2EA83 /* BikeshareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeshareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0D323D11C1E257E00B2EA83 /* BSServicesSyncTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSServicesSyncTest.swift; sourceTree = "<group>"; };
+		D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSServicesSyncTests.swift; sourceTree = "<group>"; };
 		D0D323D31C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0EB08231C1E2D100012739C /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = ../Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		D0EB083C1C1E2DAB0012739C /* BSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSManager.swift; sourceTree = "<group>"; };
@@ -124,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				D08AEE2E1C25CA50005D6980 /* BSService.swift */,
+				D08AEE4A1C29CDA7005D6980 /* BSStation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -140,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				D08AEE341C25CABD005D6980 /* BSServiceSync.swift */,
+				D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -148,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				D08AEE371C25CE92005D6980 /* ServicesResponse.json */,
+				D08AEE461C29CD32005D6980 /* StationsResponse.json */,
 				D08AEE391C275716005D6980 /* FixtureHelper.swift */,
 			);
 			path = MockResponses;
@@ -156,7 +167,8 @@
 		D08AEE3D1C2898A8005D6980 /* SyncTests */ = {
 			isa = PBXGroup;
 			children = (
-				D0D323D11C1E257E00B2EA83 /* BSServicesSyncTest.swift */,
+				D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */,
+				D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */,
 			);
 			path = SyncTests;
 			sourceTree = "<group>";
@@ -385,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08AEE381C25CE92005D6980 /* ServicesResponse.json in Resources */,
+				D08AEE471C29CD32005D6980 /* StationsResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,9 +409,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08AEE451C29CA6A005D6980 /* BSPersistentServices.swift in Sources */,
+				D08AEE4B1C29CDA7005D6980 /* BSStation.swift in Sources */,
 				D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */,
 				D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */,
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
+				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,
 				D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,7 +423,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08AEE3F1C289C65005D6980 /* BSPersistentServicesTests.swift in Sources */,
-				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */,
+				D08AEE491C29CD5A005D6980 /* BSStationsSyncTests.swift in Sources */,
+				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTests.swift in Sources */,
 				D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */,
 				D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */,
 			);

@@ -24,6 +24,9 @@ public class BSService: NSObject {
     public dynamic var lastUpdatedFromService: NSDate?
     public dynamic var updatedAt = NSDate()
 
+    public dynamic var stationsUpdatedAt: NSDate?
+    public dynamic var stations = Set<BSStation>()
+
     public init(id: Int, data: NSDictionary) {
         self.id = id
         super.init()
