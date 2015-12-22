@@ -27,3 +27,70 @@ Submodule path 'Alamofire': checked out '140bce9e7244ff1382e89323cb3370ea5072a8f
 ## Testing
 
 Run unit tests in Xcode using cmd-U.
+
+## Usage
+
+### Get a list of all available Bikeshare Services
+
+```
+let manager = BSManager()
+manager.syncServices({(error) -> Void in
+    if error == nil {
+        print("hooray! retrieved \(manager.services.count) services")
+    } else {
+        print("Uh oh, there was an error: \(error)")
+    }
+})
+```
+
+### Set your favorite service
+
+Set a favorite service to avoid syncing or dealing with all services.
+
+```
+manager.favoriteService = myFavoriteService
+manager.persist()
+```
+
+### Persist data locally to use until updates are available
+
+```
+//on your app delegate's applicationWillResignActive()
+manager.persist()
+
+//on didFinishLaunchingWithOptions()
+manager = BSManager() //init calls restore()
+
+let countOfServicesOnLaunch = manager.services.count
+manager.syncServices({(error) -> Void in
+    let newCount = manager.services.count
+    print("retrieved \(newCount - countOfServicesOnLaunch) new services")
+})
+```
+
+## KVO
+
+You can observe changes in values using iOS's built in Key Value Observing, or KVO, or with third party libraries like ReactiveCocoa.
+
+```
+//in view controller
+override func viewDidAppear(animated: Bool) {
+    manager.addObserver(self, forKeyPath: "favoriteService.name", options: .New, context: nil)
+    super.viewDidAppear(animated)
+}
+
+override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if keyPath == "favoriteService.name" {
+        print("observed change to favorite service or favorite service's name: \(change)")
+    }
+}
+```
+
+## Notes
+
+`BSManager`'s services are stored as a `Set` (or, in Objective-C, an `NSSet`). This means that the services
+contained in the set are unique based on an internal (private) ID. This makes synchronizing
+services with the API extremely fast, but also means that updates to individual services
+will trigger a change event when syncing. Keep this in mind when implementing KVO.
+
+The same is true for a `BSService`'s stations.

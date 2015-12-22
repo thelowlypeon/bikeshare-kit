@@ -14,6 +14,7 @@ private let kBSServiceCityKey = "bikeshare_kit__service_city"
 private let kBSServiceURLKey = "bikeshare_kit__service_url"
 private let kBSServiceUpdatedFromService = "bikeshare_kit__service_last_updated_from_service"
 private let kBSServiceUpdatedAt = "bikeshare_kit__service_updated_at"
+private let kBSServiceStationsKey = "bikeshare_kit__service_stations"
 
 public class BSService: NSObject {
     internal dynamic var id: Int
@@ -49,6 +50,8 @@ public class BSService: NSObject {
         aCoder.encodeObject(self.url, forKey: kBSServiceURLKey)
         aCoder.encodeObject(self.lastUpdatedFromService, forKey: kBSServiceUpdatedFromService)
         aCoder.encodeObject(self.updatedAt, forKey: kBSServiceUpdatedAt)
+
+        aCoder.encodeObject(self.stations, forKey: kBSServiceStationsKey)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -57,6 +60,7 @@ public class BSService: NSObject {
 
         //fields with defaults
         self.updatedAt = (aDecoder.decodeObjectForKey(kBSServiceUpdatedAt) as? NSDate) ?? NSDate()
+        self.stations = (aDecoder.decodeObjectForKey(kBSServiceStationsKey) as? Set<BSStation>) ?? Set<BSStation>()
 
         //optional fields
         self.name = aDecoder.decodeObjectForKey(kBSServiceNameKey) as? String
