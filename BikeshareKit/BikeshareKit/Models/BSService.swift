@@ -59,10 +59,19 @@ public class BSService: NSObject {
     }
 
     public func update(data: NSDictionary) {
-        self.name = data["name"] as? String
-        self.city = data["city"] as? String
+        let _name = data["name"] as? String
+        if _name != name {
+            self.name = _name
+        }
+        let _city = data["city"] as? String
+        if _city != city {
+            self.city = _city
+        }
         self.lastFetch = NSDate.fromAPIString(data["last_fetch"] as? String)
-        self.url = NSURL(string: (data["url"] as? String) ?? "")
+        let _url = NSURL(string: (data["url"] as? String) ?? "")
+        if _url != url {
+            self.url = _url
+        }
     }
 
     override public var hashValue: Int { return self.id }

@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-private var kBSManagerFavoriteServiceID = "bikeshare_kit__favorite_service_id"
+private var kBSManagerFavoriteService = "bikeshare_kit__favorite_service"
 public class BSManager: NSObject {
 
     internal let baseURL: String = "http://api.stationtostationapp.com/v1/"
@@ -17,27 +17,22 @@ public class BSManager: NSObject {
     public dynamic var servicesUpdatedAt: NSDate?
     public dynamic var services = Set<BSService>()
 
-    internal var favoriteServiceID: Int? {
+    public dynamic var favoriteService: BSService? {
         didSet {
-            if let id = self.favoriteServiceID {
-                let data = NSKeyedArchiver.archivedDataWithRootObject(id)
-                NSUserDefaults.standardUserDefaults().setObject(data, forKey: kBSManagerFavoriteServiceID)
+            if let service = favoriteService {
+                let data = NSKeyedArchiver.archivedDataWithRootObject(service)
+                NSUserDefaults.standardUserDefaults().setObject(data, forKey: kBSManagerFavoriteService)
             } else {
-                NSUserDefaults.standardUserDefaults().setObject(nil, forKey: kBSManagerFavoriteServiceID)
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(kBSManagerFavoriteService)
             }
         }
-    }
-
-    public dynamic var favoriteService: BSService? {
-        set(service) { self.favoriteServiceID = service?.id }
-        get { return self.services.filter{$0.id == self.favoriteServiceID}.first }
     }
 
     override public init() {
         super.init()
 
-        if let unarchivedData = NSUserDefaults.standardUserDefaults().objectForKey(kBSManagerFavoriteServiceID) as? NSData {
-            self.favoriteServiceID = NSKeyedUnarchiver.unarchiveObjectWithData(unarchivedData) as? Int
+        if let unarchivedData = NSUserDefaults.standardUserDefaults().objectForKey(kBSManagerFavoriteService) as? NSData {
+            self.favoriteService = NSKeyedUnarchiver.unarchiveObjectWithData(unarchivedData) as? BSService
         }
     }
 }

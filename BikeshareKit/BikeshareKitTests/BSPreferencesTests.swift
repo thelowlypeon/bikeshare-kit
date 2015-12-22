@@ -15,6 +15,9 @@ class BSPreferencesTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        NSUserDefaults.resetStandardUserDefaults()
+        NSUserDefaults.standardUserDefaults().synchronize()
+
         self.manager = BSManager()
     }
     
@@ -22,15 +25,15 @@ class BSPreferencesTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFavoriteServiceIsIDSaved() {
+    func testFavoriteServiceIsSaved() {
         let divvy = BSService(id: 1, data: ["name": "divvy"])
         let citi = BSService(id: 2, data: ["name": "citibikenyc"])
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
 
         let newManager = BSManager()
-        XCTAssertNotNil(newManager.favoriteServiceID)
-        XCTAssertEqual(newManager.favoriteServiceID, manager.favoriteServiceID)
+        XCTAssertNotNil(newManager.favoriteService)
+        XCTAssertEqual(newManager.favoriteService, manager.favoriteService)
     }
 
     func testFavoriteServiceIsNilIfUpdateRemovesIt() {
@@ -39,22 +42,24 @@ class BSPreferencesTests: XCTestCase {
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
 
-        let newManager = BSManager()
-        XCTAssertNil(newManager.favoriteService)
+        manager.services = [citi]
+        manager.refreshFavoriteService()
+
+        XCTAssertNil(manager.favoriteService)
     }
 
-    func testFavoriteServiceIsUpdated() {
+    func testFavoriteServiceIsRemoved() {
         let divvy = BSService(id: 1, data: ["name": "divvy"])
         let citi = BSService(id: 2, data: ["name": "citibikenyc"])
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
 
-        let newName = "Supa cool divvy"
-        divvy.name = newName
         let newManager = BSManager()
-        newManager.services = [divvy, citi]
-
-        XCTAssertEqual(newManager.favoriteService?.name, newName)
+        XCTAssertNotNil(newManager.favoriteService)
+        newManager.favoriteService = nil
+        XCTAssertNil(newManager.favoriteService)
+        NSUserDefaults.standardUserDefaults().synchronize()
+        let newestManager = BSManager()
+        XCTAssertNil(newestManager.favoriteService)
     }
-
 }
