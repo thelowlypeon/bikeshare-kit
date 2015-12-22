@@ -55,7 +55,7 @@ class BSServicesSyncTests: XCTestCase {
                 XCTAssertNotEqual(service.id, -1)
                 XCTAssertNotNil(service.url)
                 XCTAssertNotNil(service.city)
-                XCTAssertNotNil(service.lastFetch)
+                XCTAssertNotNil(service.lastUpdatedFromService)
             }
         })
     }

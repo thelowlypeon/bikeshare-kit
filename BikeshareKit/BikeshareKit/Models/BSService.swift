@@ -12,7 +12,8 @@ private let kBSServiceIDKey = "bikeshare_kit__service_id"
 private let kBSServiceNameKey = "bikeshare_kit__service_name"
 private let kBSServiceCityKey = "bikeshare_kit__service_city"
 private let kBSServiceURLKey = "bikeshare_kit__service_url"
-private let kBSServiceLastFetchKey = "bikeshare_kit__service_last_fetch"
+private let kBSServiceUpdatedFromService = "bikeshare_kit__service_last_updated_from_service"
+private let kBSServiceUpdatedAt = "bikeshare_kit__service_updated_at"
 
 public class BSService: NSObject {
     internal dynamic var id: Int
@@ -20,7 +21,8 @@ public class BSService: NSObject {
     public dynamic var name: String?
     public dynamic var city: String?
     public dynamic var url: NSURL?
-    public dynamic var lastFetch: NSDate? //will this be confusing?
+    public dynamic var lastUpdatedFromService: NSDate?
+    public dynamic var updatedAt = NSDate()
 
     public init(id: Int, data: NSDictionary) {
         self.id = id
@@ -42,18 +44,22 @@ public class BSService: NSObject {
         aCoder.encodeObject(self.name, forKey: kBSServiceNameKey)
         aCoder.encodeObject(self.city, forKey: kBSServiceCityKey)
         aCoder.encodeObject(self.url, forKey: kBSServiceURLKey)
-        aCoder.encodeObject(self.lastFetch, forKey: kBSServiceLastFetchKey)
+        aCoder.encodeObject(self.lastUpdatedFromService, forKey: kBSServiceUpdatedFromService)
+        aCoder.encodeObject(self.updatedAt, forKey: kBSServiceUpdatedAt)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         //required fields
         self.id = aDecoder.decodeObjectForKey(kBSServiceIDKey) as! Int
 
+        //fields with defaults
+        self.updatedAt = (aDecoder.decodeObjectForKey(kBSServiceUpdatedAt) as? NSDate) ?? NSDate()
+
         //optional fields
         self.name = aDecoder.decodeObjectForKey(kBSServiceNameKey) as? String
         self.city = aDecoder.decodeObjectForKey(kBSServiceCityKey) as? String
         self.url = aDecoder.decodeObjectForKey(kBSServiceURLKey) as? NSURL
-        self.lastFetch = aDecoder.decodeObjectForKey(kBSServiceLastFetchKey) as? NSDate
+        self.lastUpdatedFromService = aDecoder.decodeObjectForKey(kBSServiceUpdatedFromService) as? NSDate
 
         super.init()
     }
@@ -67,11 +73,16 @@ public class BSService: NSObject {
         if _city != city {
             self.city = _city
         }
-        self.lastFetch = NSDate.fromAPIString(data["last_fetch"] as? String)
+        let _lastUpdatedFromService = NSDate.fromAPIString(data["last_fetch"] as? String)
+        if _lastUpdatedFromService != lastUpdatedFromService {
+            self.lastUpdatedFromService = _lastUpdatedFromService
+        }
         let _url = NSURL(string: (data["url"] as? String) ?? "")
         if _url != url {
             self.url = _url
         }
+
+        updatedAt = NSDate()
     }
 
     override public var hashValue: Int { return self.id }
