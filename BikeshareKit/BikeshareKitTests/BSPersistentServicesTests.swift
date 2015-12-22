@@ -9,7 +9,7 @@
 import XCTest
 @testable import BikeshareKit
 
-class BSPreferencesTests: XCTestCase {
+class BSPersistentServicesTests: XCTestCase {
     var manager: BSManager!
     
     override func setUp() {
@@ -30,6 +30,7 @@ class BSPreferencesTests: XCTestCase {
         let citi = BSService(id: 2, data: ["name": "citibikenyc"])
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
+        manager.persist()
 
         let newManager = BSManager()
         XCTAssertNotNil(newManager.favoriteService)
@@ -53,12 +54,13 @@ class BSPreferencesTests: XCTestCase {
         let citi = BSService(id: 2, data: ["name": "citibikenyc"])
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
+        manager.persist()
 
         let newManager = BSManager()
         XCTAssertNotNil(newManager.favoriteService)
         newManager.favoriteService = nil
+        newManager.persist()
         XCTAssertNil(newManager.favoriteService)
-        NSUserDefaults.standardUserDefaults().synchronize()
         let newestManager = BSManager()
         XCTAssertNil(newestManager.favoriteService)
     }

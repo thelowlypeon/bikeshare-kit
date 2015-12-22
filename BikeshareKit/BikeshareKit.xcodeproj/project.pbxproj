@@ -12,8 +12,9 @@
 		D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE341C25CABD005D6980 /* BSServiceSync.swift */; };
 		D08AEE381C25CE92005D6980 /* ServicesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = D08AEE371C25CE92005D6980 /* ServicesResponse.json */; };
 		D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE391C275716005D6980 /* FixtureHelper.swift */; };
-		D08AEE3F1C289C65005D6980 /* BSPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */; };
+		D08AEE3F1C289C65005D6980 /* BSPersistentServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE3E1C289C65005D6980 /* BSPersistentServicesTests.swift */; };
 		D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */; };
+		D08AEE451C29CA6A005D6980 /* BSPersistentServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE441C29CA6A005D6980 /* BSPersistentServices.swift */; };
 		D0D323C61C1E257E00B2EA83 /* BikeshareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0D323CD1C1E257E00B2EA83 /* BikeshareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */; };
 		D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D323D11C1E257E00B2EA83 /* BSServicesSyncTest.swift */; };
@@ -86,8 +87,9 @@
 		D08AEE341C25CABD005D6980 /* BSServiceSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServiceSync.swift; sourceTree = "<group>"; };
 		D08AEE371C25CE92005D6980 /* ServicesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServicesResponse.json; sourceTree = "<group>"; };
 		D08AEE391C275716005D6980 /* FixtureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixtureHelper.swift; sourceTree = "<group>"; };
-		D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPreferencesTests.swift; sourceTree = "<group>"; };
+		D08AEE3E1C289C65005D6980 /* BSPersistentServicesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentServicesTests.swift; sourceTree = "<group>"; };
 		D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServicesKVOTests.swift; sourceTree = "<group>"; };
+		D08AEE441C29CA6A005D6980 /* BSPersistentServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentServices.swift; sourceTree = "<group>"; };
 		D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BikeshareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BikeshareKit.h; sourceTree = "<group>"; };
 		D0D323C71C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,6 +161,14 @@
 			path = SyncTests;
 			sourceTree = "<group>";
 		};
+		D08AEE431C29CA41005D6980 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				D08AEE441C29CA6A005D6980 /* BSPersistentServices.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		D0D323B81C1E257E00B2EA83 = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +191,7 @@
 		D0D323C41C1E257E00B2EA83 /* BikeshareKit */ = {
 			isa = PBXGroup;
 			children = (
+				D08AEE431C29CA41005D6980 /* Persistence */,
 				D08AEE331C25CAA8005D6980 /* Sync */,
 				D08AEE301C25CA64005D6980 /* Common */,
 				D08AEE261C25CA33005D6980 /* Models */,
@@ -197,7 +208,7 @@
 				D0D323D31C1E257E00B2EA83 /* Info.plist */,
 				D08AEE361C25CE62005D6980 /* MockResponses */,
 				D08AEE3D1C2898A8005D6980 /* SyncTests */,
-				D08AEE3E1C289C65005D6980 /* BSPreferencesTests.swift */,
+				D08AEE3E1C289C65005D6980 /* BSPersistentServicesTests.swift */,
 				D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */,
 			);
 			path = BikeshareKitTests;
@@ -384,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08AEE451C29CA6A005D6980 /* BSPersistentServices.swift in Sources */,
 				D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */,
 				D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */,
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
@@ -395,7 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D08AEE3F1C289C65005D6980 /* BSPreferencesTests.swift in Sources */,
+				D08AEE3F1C289C65005D6980 /* BSPersistentServicesTests.swift in Sources */,
 				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTest.swift in Sources */,
 				D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */,
 				D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */,

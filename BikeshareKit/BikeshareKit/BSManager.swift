@@ -9,30 +9,31 @@
 import Foundation
 import Alamofire
 
-private var kBSManagerFavoriteService = "bikeshare_kit__favorite_service"
 public class BSManager: NSObject {
 
     internal let baseURL: String = "http://api.stationtostationapp.com/v1/"
 
     public dynamic var servicesUpdatedAt: NSDate?
     public dynamic var services = Set<BSService>()
+    public dynamic var favoriteService: BSService?
 
-    public dynamic var favoriteService: BSService? {
-        didSet {
-            if let service = favoriteService {
-                let data = NSKeyedArchiver.archivedDataWithRootObject(service)
-                NSUserDefaults.standardUserDefaults().setObject(data, forKey: kBSManagerFavoriteService)
-            } else {
-                NSUserDefaults.standardUserDefaults().removeObjectForKey(kBSManagerFavoriteService)
-            }
-        }
+    public func persist() {
+        self.persistServices()
+        self.persistFavoriteService()
+    }
+
+    public func restore() {
+        self.restoreServices()
+        self.restoreFavoriteService()
+    }
+
+    deinit {
+        self.persist()
     }
 
     override public init() {
         super.init()
 
-        if let unarchivedData = NSUserDefaults.standardUserDefaults().objectForKey(kBSManagerFavoriteService) as? NSData {
-            self.favoriteService = NSKeyedUnarchiver.unarchiveObjectWithData(unarchivedData) as? BSService
-        }
+        self.restore()
     }
 }
