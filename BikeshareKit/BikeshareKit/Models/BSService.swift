@@ -92,6 +92,23 @@ public class BSService: NSObject {
         updatedAt = NSDate()
     }
 
+    public func replace(withService rhs: BSService) {
+        if self.name != rhs.name {
+            self.name = rhs.name
+        }
+        if self.city != rhs.city {
+            self.city = rhs.city
+        }
+        if self.lastUpdatedFromService != rhs.lastUpdatedFromService {
+            self.lastUpdatedFromService = rhs.lastUpdatedFromService
+        }
+        if self.url != rhs.url {
+            self.url = rhs.url
+        }
+
+        updatedAt = NSDate()
+    }
+
     override public var hashValue: Int { return self.id }
 
     override public func isEqual(object: AnyObject?) -> Bool {

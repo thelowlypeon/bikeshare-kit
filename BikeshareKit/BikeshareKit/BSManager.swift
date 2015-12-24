@@ -9,9 +9,8 @@
 import Foundation
 import Alamofire
 
+internal let API_BASE_URL: String = "http://api.stationtostationapp.com/v1/"
 public class BSManager: NSObject {
-
-    internal let baseURL: String = "http://api.stationtostationapp.com/v1/"
 
     public dynamic var servicesUpdatedAt: NSDate?
     public dynamic var services = Set<BSService>()

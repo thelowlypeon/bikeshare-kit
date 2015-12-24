@@ -10,9 +10,13 @@ import Foundation
 import Alamofire
 
 extension BSService {
+    internal var stationsSyncPath: String {
+        get { return "\(API_BASE_URL)services/\(self.name!)/stations" }
+    }
     public func syncStations(callback: ((NSError?) -> Void)?) {
-        //Alamofire.request(.GET, "\(self.baseURL)services/\(self.id)/stations")
-        //    .responseJSON(completionHandler: self.syncStationsCompletionHandler(callback))
+        print("syncing stations for \(self.name!) at \(stationsSyncPath)")
+        Alamofire.request(.GET, stationsSyncPath)
+            .responseJSON(completionHandler: self.syncStationsCompletionHandler(callback))
     }
 
     internal func syncStationsCompletionHandler(callback: ((NSError?) -> Void)?) -> (Response<AnyObject, NSError> -> Void) {

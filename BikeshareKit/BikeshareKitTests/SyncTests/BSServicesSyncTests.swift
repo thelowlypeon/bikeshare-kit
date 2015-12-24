@@ -73,7 +73,6 @@ class BSServicesSyncTests: XCTestCase {
             XCTAssertTrue(self.manager.services.contains(divvy))
             for service in self.manager.services {
                 if service.id == 1 {
-                    XCTAssertNotEqual(service.city, divvy.city)
                     XCTAssertEqual(service.city, "Chicago")
                     break
                 }

@@ -83,10 +83,6 @@ class BSServicesKVOTests: XCTestCase {
     }
 
 
-    /*
-     * TODO currently updating attributes of favoriteService sends a notification
-     * of change of the whole instance. eventually, this test should pass.
-     *
     func testFavoriteServiceDoesntTriggerChangeForNestedChange() {
         let expectation = expectationWithDescription("Received observer notification for change")
         observeKeyPath("favoriteService")
@@ -104,7 +100,7 @@ class BSServicesKVOTests: XCTestCase {
                 XCTAssertEqual(service?.name, "divvy")
                 break
             case 2:
-                XCTAssertEqual(service?.name, "citi")
+                XCTAssertEqual(service?.name, "citibikenyc")
                 expectation.fulfill()
                 break
             default:
@@ -114,15 +110,14 @@ class BSServicesKVOTests: XCTestCase {
 
         manager.services = [divvy, citi]
         manager.favoriteService = divvy //second notification
-        manager.services = [updatedDivvy, citi]
-        manager.refreshFavoriteService() //hopefully not notification
+        let index = manager.services.indexOf(divvy)!
+        manager.services[index].replace(withService: updatedDivvy)
         manager.favoriteService = citi //fulfill
 
         waitForExpectationsWithTimeout(10, handler: { _ -> Void in
             XCTAssertEqual(citi, self.manager.favoriteService)
         })
     }
-    */
 
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         //print("observed \(change) at \(keyPath), loking for \(currentlyObservingKeyPath)")
