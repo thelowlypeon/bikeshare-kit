@@ -14,6 +14,7 @@ private let kBSStationActiveKey = "bikeshare_kit__station_active"
 private let kBSStationNameKey = "bikeshare_kit__station_name"
 private let kBSStationTotalDocksKey = "bikeshare_kit__station_total_docks"
 private let kBSStationLocationKey = "bikeshare_kit__station_location"
+private let kBSStationAvailabilityKey = "bikeshare_kit__station_availability"
 private let kBSStationUpdatedAtKey = "bikeshare_kit__station_updated_at"
 
 public class BSStation: NSObject {
@@ -23,6 +24,8 @@ public class BSStation: NSObject {
     public dynamic var name: String?
     public dynamic var totalDocks: Int = 0
     public dynamic var location: CLLocation?
+    public dynamic var availability: BSAvailability?
+
     public dynamic var updatedAt = NSDate()
 
     public init(id: Int, data: NSDictionary) {
@@ -46,6 +49,7 @@ public class BSStation: NSObject {
         aCoder.encodeObject(self.name, forKey: kBSStationNameKey)
         aCoder.encodeObject(self.totalDocks, forKey: kBSStationTotalDocksKey)
         aCoder.encodeObject(self.location, forKey: kBSStationLocationKey)
+        aCoder.encodeObject(self.availability, forKey: kBSStationAvailabilityKey)
         aCoder.encodeObject(self.updatedAt, forKey: kBSStationUpdatedAtKey)
     }
 
@@ -56,11 +60,12 @@ public class BSStation: NSObject {
         //fields with defaults
         self.active = (aDecoder.decodeObjectForKey(kBSStationActiveKey) as? Bool) ?? false
         self.updatedAt = (aDecoder.decodeObjectForKey(kBSStationUpdatedAtKey) as? NSDate) ?? NSDate()
+        self.totalDocks = aDecoder.decodeObjectForKey(kBSStationTotalDocksKey) as? Int ?? 0
 
         //optional fields
         self.name = aDecoder.decodeObjectForKey(kBSStationNameKey) as? String
         self.location = aDecoder.decodeObjectForKey(kBSStationLocationKey) as? CLLocation
-        self.totalDocks = aDecoder.decodeObjectForKey(kBSStationTotalDocksKey) as? Int ?? 0
+        self.availability = aDecoder.decodeObjectForKey(kBSStationAvailabilityKey) as? BSAvailability
 
         super.init()
     }
@@ -85,7 +90,37 @@ public class BSStation: NSObject {
             self.totalDocks = _totalDocks
         }
 
+        if let availabilityData = data["availability"] as? NSDictionary {
+            if let _availability = BSAvailability(data: availabilityData) {
+                self.availability = _availability
+            }
+        }
+
         updatedAt = NSDate()
+    }
+
+    public func replace(withStation rhs: BSStation) {
+        if self.active != rhs.active {
+            self.active = rhs.active
+        }
+        if self.name != rhs.name {
+            self.name = rhs.name
+        }
+        if self.totalDocks != rhs.totalDocks {
+            self.totalDocks = rhs.totalDocks
+        }
+        if self.location != rhs.location {
+            self.location = rhs.location
+        }
+        if self.availability != rhs.availability {
+            self.availability = rhs.availability
+        }
+
+        updatedAt = NSDate()
+    }
+
+    override public var description: String {
+        return self.name ?? "loading..."
     }
 
     override public var hashValue: Int { return self.id }

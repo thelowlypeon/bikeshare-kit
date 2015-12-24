@@ -109,6 +109,10 @@ public class BSService: NSObject {
         updatedAt = NSDate()
     }
 
+    override public var description: String {
+        return self.name ?? "loading..."
+    }
+
     override public var hashValue: Int { return self.id }
 
     override public func isEqual(object: AnyObject?) -> Bool {
