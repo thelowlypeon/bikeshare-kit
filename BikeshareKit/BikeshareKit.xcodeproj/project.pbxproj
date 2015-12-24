@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D070EAF31C2CA12C00818943 /* BSAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EAF21C2CA12C00818943 /* BSAvailability.swift */; };
+		D070EAFC1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */; };
 		D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE2E1C25CA50005D6980 /* BSService.swift */; };
 		D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE311C25CA79005D6980 /* NSDateExtension.swift */; };
 		D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE341C25CABD005D6980 /* BSServiceSync.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D070EAF21C2CA12C00818943 /* BSAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailability.swift; sourceTree = "<group>"; };
+		D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilitySyncTests.swift; sourceTree = "<group>"; };
 		D08AEE2E1C25CA50005D6980 /* BSService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSService.swift; sourceTree = "<group>"; };
 		D08AEE311C25CA79005D6980 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		D08AEE341C25CABD005D6980 /* BSServiceSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServiceSync.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 		D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationsSyncTests.swift; sourceTree = "<group>"; };
 		D08AEE4A1C29CDA7005D6980 /* BSStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStation.swift; sourceTree = "<group>"; };
 		D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationSync.swift; sourceTree = "<group>"; };
+		D08AEE4F1C2A0881005D6980 /* BikeshareKit.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BikeshareKit.playground; sourceTree = "<group>"; };
 		D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BikeshareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BikeshareKit.h; sourceTree = "<group>"; };
 		D0D323C71C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 			children = (
 				D08AEE2E1C25CA50005D6980 /* BSService.swift */,
 				D08AEE4A1C29CDA7005D6980 /* BSStation.swift */,
+				D070EAF21C2CA12C00818943 /* BSAvailability.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -169,6 +175,7 @@
 			children = (
 				D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */,
 				D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */,
+				D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */,
 			);
 			path = SyncTests;
 			sourceTree = "<group>";
@@ -184,6 +191,7 @@
 		D0D323B81C1E257E00B2EA83 = {
 			isa = PBXGroup;
 			children = (
+				D08AEE4F1C2A0881005D6980 /* BikeshareKit.playground */,
 				D0EB08231C1E2D100012739C /* Alamofire.xcodeproj */,
 				D0D323C41C1E257E00B2EA83 /* BikeshareKit */,
 				D0D323D01C1E257E00B2EA83 /* BikeshareKitTests */,
@@ -415,6 +423,7 @@
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
 				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,
 				D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */,
+				D070EAF31C2CA12C00818943 /* BSAvailability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D070EAFC1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift in Sources */,
 				D08AEE3F1C289C65005D6980 /* BSPersistentServicesTests.swift in Sources */,
 				D08AEE491C29CD5A005D6980 /* BSStationsSyncTests.swift in Sources */,
 				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTests.swift in Sources */,

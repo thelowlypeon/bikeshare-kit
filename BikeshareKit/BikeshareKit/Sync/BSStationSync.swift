@@ -33,7 +33,7 @@ extension BSService {
 
     /*
      * Note: This is quite a bit slower than the previous implementation:
-     *   let retrievedStations = Set(json.map{BSStation(data: $0)}.filter{$0 != nil}.m
+     *   let retrievedStations = Set(json.map{BSStation(data: $0)}.filter{$0 != nil}.map{$0!})
      *   let stationsToRemove = self.stations.subtract(retrievedStations)
      *   self.stations.unionInPlace(retrievedStations)
      *   self.stations.subtractInPlace(stationsToRemove)
