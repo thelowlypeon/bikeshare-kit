@@ -31,6 +31,18 @@ extension BSService {
         }
     }
 
+    /*
+     * Note: This is quite a bit slower than the previous implementation:
+     *   let retrievedStations = Set(json.map{BSStation(data: $0)}.filter{$0 != nil}.m
+     *   let stationsToRemove = self.stations.subtract(retrievedStations)
+     *   self.stations.unionInPlace(retrievedStations)
+     *   self.stations.subtractInPlace(stationsToRemove)
+     * This is because the previous implementation replaced instances if isEqual returned true,
+     * which caused KVO to fire unwanted notifications.
+     *
+     * TODO: determine if this causes significant performance issues
+     *       Complexity: O(n)
+     */
     internal func handleSuccessResponse(JSON: AnyObject?) -> NSError? {
         if let json = (JSON as? NSArray) as? [NSDictionary] {
 
