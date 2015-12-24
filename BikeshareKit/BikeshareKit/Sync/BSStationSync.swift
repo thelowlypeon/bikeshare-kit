@@ -14,7 +14,6 @@ extension BSService {
         get { return "\(API_BASE_URL)services/\(self.name!)/stations" }
     }
     public func syncStations(callback: ((NSError?) -> Void)?) {
-        print("syncing stations for \(self.name!) at \(stationsSyncPath)")
         Alamofire.request(.GET, stationsSyncPath)
             .responseJSON(completionHandler: self.syncStationsCompletionHandler(callback))
     }
@@ -34,10 +33,31 @@ extension BSService {
 
     internal func handleSuccessResponse(JSON: AnyObject?) -> NSError? {
         if let json = (JSON as? NSArray) as? [NSDictionary] {
+
             let retrievedStations = Set(json.map{BSStation(data: $0)}.filter{$0 != nil}.map{$0!})
+            print("initial count: \(self.stations.count), retrieved \(retrievedStations.count)")
+
+            //determine new stations, add at the end
+            let stationsToAdd = retrievedStations.subtract(self.stations)
+            print("found \(stationsToAdd.count) stations to add")
+
+            //remove old
             let stationsToRemove = self.stations.subtract(retrievedStations)
-            self.stations.unionInPlace(retrievedStations)
             self.stations.subtractInPlace(stationsToRemove)
+            print("just removed outdated stations. current count: \(self.stations.count)")
+
+            //update existing
+            let stationsToUpdate = retrievedStations.intersect(self.stations)
+            print("updating \(stationsToUpdate.count) stations")
+            for rhs in stationsToUpdate {
+                let index = self.stations.indexOf(rhs)!
+                print("updating \(self.stations[index].name) with \(rhs.name)")
+                self.stations[index].replace(withStation: rhs)
+            }
+
+            //add new
+            print("adding \(stationsToAdd.count) stations")
+            self.stations.unionInPlace(stationsToAdd)
 
             stationsUpdatedAt = NSDate()
             return nil
