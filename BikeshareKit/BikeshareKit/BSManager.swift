@@ -10,11 +10,19 @@ import Foundation
 import Alamofire
 
 internal let API_BASE_URL: String = "http://api.stationtostationapp.com/v1/"
+internal var _manager: BSManager!
 public class BSManager: NSObject {
 
     public dynamic var servicesUpdatedAt: NSDate?
     public dynamic var services = Set<BSService>()
     public dynamic var favoriteService: BSService?
+
+    public static func sharedManager() -> BSManager {
+        if _manager == nil {
+            _manager = BSManager()
+        }
+        return _manager
+    }
 
     public func persist() {
         self.persistServices()
