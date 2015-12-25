@@ -304,6 +304,7 @@
 		D0D323B91C1E257E00B2EA83 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = BS;
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Out of Something, LLC";
