@@ -32,7 +32,7 @@ class BSPersistentServicesTests: XCTestCase {
         manager.favoriteService = divvy
         manager.persist()
 
-        let newManager = BSManager()
+        let newManager = BSManager(restore: true)
         XCTAssertNotNil(newManager.favoriteService)
         XCTAssertEqual(newManager.favoriteService, manager.favoriteService)
     }
@@ -56,12 +56,34 @@ class BSPersistentServicesTests: XCTestCase {
         manager.favoriteService = divvy
         manager.persist()
 
-        let newManager = BSManager()
+        let newManager = BSManager(restore: true)
         XCTAssertNotNil(newManager.favoriteService)
         newManager.favoriteService = nil
         newManager.persist()
         XCTAssertNil(newManager.favoriteService)
         let newestManager = BSManager()
         XCTAssertNil(newestManager.favoriteService)
+    }
+
+    func testStationsAreArchivedWithService() {
+        let divvy = BSService(id: 1, data: ["name": "divvy"])
+        let buckingham = BSStation(id: 1, data: ["name": "buckingham"])
+        buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: NSDate())
+        divvy.stations = [buckingham]
+        manager.services = [divvy]
+        manager.favoriteService = divvy
+        manager.persist()
+
+        let newManager = BSManager(restore: true)
+        let favoriteService = newManager.favoriteService
+        XCTAssertNotNil(favoriteService)
+        XCTAssertEqual(favoriteService?.stations.count, 1)
+        let station = favoriteService?.stations.first
+        XCTAssertNotNil(station)
+        XCTAssertEqual(station?.name, buckingham.name)
+        let availability = station?.availability
+        XCTAssertNotNil(availability)
+        XCTAssertEqual(availability?.bikes, 1)
+        XCTAssertEqual(availability?.docks, 11)
     }
 }

@@ -105,6 +105,7 @@ public class BSService: NSObject {
         if self.url != rhs.url {
             self.url = rhs.url
         }
+        self.stations = rhs.stations
 
         updatedAt = NSDate()
     }
