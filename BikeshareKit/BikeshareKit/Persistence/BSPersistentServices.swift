@@ -38,8 +38,8 @@ extension BSManager {
     // calling this with no services in self.services will remove favorite
     public func restoreFavoriteService() {
         let favoriteServiceID = NSUserDefaults.standardUserDefaults().integerForKey(kBSManagerFavoriteServiceID)
-        self.favoriteService = BSService(id: favoriteServiceID, data: NSDictionary())
-        self.refreshFavoriteService()
+        // do not call refreshFavoriteService because that will yield a different service instance
+        self.favoriteService = self.services.filter{$0.id == favoriteServiceID}.first
     }
 
 }
