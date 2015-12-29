@@ -23,6 +23,13 @@ public class BSStation: NSObject {
     public dynamic var active: Bool = false
     public dynamic var name: String?
     public dynamic var totalDocks: Int = 0
+    public dynamic var inactiveDocks: Int {
+        get {
+            return self.availability != nil ?
+                totalDocks - (self.availability!.bikes + self.availability!.docks)
+                : 0
+        }
+    }
     public dynamic var location: CLLocation?
     public dynamic var availability: BSAvailability?
 

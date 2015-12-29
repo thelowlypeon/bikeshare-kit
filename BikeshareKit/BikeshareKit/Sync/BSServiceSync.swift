@@ -16,7 +16,7 @@ extension BSManager {
             .responseJSON(completionHandler: self.syncServicesCompletionHandler(callback))
     }
 
-    internal func syncServicesCompletionHandler(callback: ((NSError?) -> Void)?) -> (Response<AnyObject, NSError> -> Void) {
+    internal func syncServicesCompletionHandler(callback: ((NSError?) -> Void)? = nil) -> (Response<AnyObject, NSError> -> Void) {
         print("received response from syncing")
         return {[weak self](response) -> Void in
             switch response.result {

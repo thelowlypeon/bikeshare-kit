@@ -19,6 +19,7 @@ public class BSManager: NSObject {
 
     public static func sharedManager() -> BSManager {
         if _manager == nil {
+            //TODO decide if .restore() should happen by default
             _manager = BSManager()
         }
         return _manager
@@ -34,13 +35,15 @@ public class BSManager: NSObject {
         self.restoreFavoriteService()
     }
 
-    deinit {
-        self.persist()
+    internal convenience init(restore: Bool) {
+        self.init()
+
+        if restore {
+            self.restore()
+        }
     }
 
-    override public init() {
-        super.init()
-
-        self.restore()
+    deinit {
+        self.persist()
     }
 }
