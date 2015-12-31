@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0330AA41C35E3D30030A51A /* BSAvailabilityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0330AA31C35E3D30030A51A /* BSAvailabilityChart.swift */; };
+		D0330AA61C35E3FB0030A51A /* BSAvailabilityChartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0330AA51C35E3FB0030A51A /* BSAvailabilityChartItem.swift */; };
 		D070EAFC1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */; };
 		D070EB331C32DC4800818943 /* BSPersistentStationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */; };
 		D070EB381C32E1E400818943 /* BSAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB371C32E1E400818943 /* BSAvailability.swift */; };
@@ -90,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D0330AA31C35E3D30030A51A /* BSAvailabilityChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilityChart.swift; sourceTree = "<group>"; };
+		D0330AA51C35E3FB0030A51A /* BSAvailabilityChartItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilityChartItem.swift; sourceTree = "<group>"; };
 		D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilitySyncTests.swift; sourceTree = "<group>"; };
 		D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentStationsTests.swift; sourceTree = "<group>"; };
 		D070EB371C32E1E400818943 /* BSAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailability.swift; sourceTree = "<group>"; };
@@ -137,6 +141,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D0330A9B1C35E3A30030A51A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D0330AA31C35E3D30030A51A /* BSAvailabilityChart.swift */,
+				D0330AA51C35E3FB0030A51A /* BSAvailabilityChartItem.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		D08AEE261C25CA33005D6980 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +228,7 @@
 		D0D323C41C1E257E00B2EA83 /* BikeshareKit */ = {
 			isa = PBXGroup;
 			children = (
+				D0330A9B1C35E3A30030A51A /* UI */,
 				D08AEE431C29CA41005D6980 /* Persistence */,
 				D08AEE331C25CAA8005D6980 /* Sync */,
 				D08AEE301C25CA64005D6980 /* Common */,
@@ -426,7 +440,9 @@
 				D08AEE451C29CA6A005D6980 /* BSPersistentServices.swift in Sources */,
 				D08AEE4B1C29CDA7005D6980 /* BSStation.swift in Sources */,
 				D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */,
+				D0330AA61C35E3FB0030A51A /* BSAvailabilityChartItem.swift in Sources */,
 				D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */,
+				D0330AA41C35E3D30030A51A /* BSAvailabilityChart.swift in Sources */,
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
 				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,
 				D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */,
