@@ -11,6 +11,8 @@ import Foundation
 private let kBSServiceIDKey = "bikeshare_kit__service_id"
 private let kBSServiceNameKey = "bikeshare_kit__service_name"
 private let kBSServiceCityKey = "bikeshare_kit__service_city"
+private let kBSServiceColorKey = "bikeshare_kit__service_color"
+private let kBSServiceImageKey = "bikeshare_kit__service_image"
 private let kBSServiceNumberOfDocksKey = "bikeshare_kit__service_num_docks"
 private let kBSServiceNumberOfBikesAvailableKey = "bikeshare_kit__service_num_bikes_available"
 private let kBSServiceNumberOfDocksAvailableKey = "bikeshare_kit__service_num_docks_available"
@@ -26,6 +28,8 @@ public class BSService: NSObject {
     public dynamic var name: String?
     public dynamic var city: String?
     public dynamic var url: NSURL?
+    public dynamic var color: UIColor = UIColor(red: 0.2, green: 0.7, blue: 0.92, alpha: 1) //default to divvy colors
+    public dynamic var image: UIImage?
 
     public dynamic var numberOfDocks: Int = 0
     public dynamic var numberOfBikesAvailable: Int = 0
@@ -57,6 +61,8 @@ public class BSService: NSObject {
         aCoder.encodeObject(self.id, forKey: kBSServiceIDKey)
         aCoder.encodeObject(self.name, forKey: kBSServiceNameKey)
         aCoder.encodeObject(self.city, forKey: kBSServiceCityKey)
+        aCoder.encodeObject(self.color, forKey: kBSServiceColorKey)
+        aCoder.encodeObject(self.image, forKey: kBSServiceImageKey)
         aCoder.encodeObject(self.numberOfDocks, forKey: kBSServiceNumberOfDocksKey)
         aCoder.encodeObject(self.numberOfBikesAvailable, forKey: kBSServiceNumberOfBikesAvailableKey)
         aCoder.encodeObject(self.numberOfDocksAvailable, forKey: kBSServiceNumberOfDocksAvailableKey)
@@ -79,10 +85,14 @@ public class BSService: NSObject {
         self.numberOfBikesAvailable = (aDecoder.decodeObjectForKey(kBSServiceNumberOfBikesAvailableKey) as? Int) ?? 0
         self.numberOfDocksAvailable = (aDecoder.decodeObjectForKey(kBSServiceNumberOfDocksAvailableKey) as? Int) ?? 0
         self.numberOfStations = (aDecoder.decodeObjectForKey(kBSServiceNumberOfStationsKey) as? Int) ?? 0
+        if let _color = aDecoder.decodeObjectForKey(kBSServiceColorKey) as? UIColor {
+            self.color = _color
+        }
 
         //optional fields
         self.name = aDecoder.decodeObjectForKey(kBSServiceNameKey) as? String
         self.city = aDecoder.decodeObjectForKey(kBSServiceCityKey) as? String
+        self.image = aDecoder.decodeObjectForKey(kBSServiceImageKey) as? UIImage
         self.url = aDecoder.decodeObjectForKey(kBSServiceURLKey) as? NSURL
         self.lastUpdatedFromService = aDecoder.decodeObjectForKey(kBSServiceUpdatedFromService) as? NSDate
 
@@ -116,6 +126,22 @@ public class BSService: NSObject {
         if let _numberOfStations = data["num_stations"] as? Int {
             if _numberOfStations != numberOfStations {
                 self.numberOfStations = _numberOfStations
+            }
+        }
+        //TODO lazy load the image
+        if let _imageName = data["image"] as? String {
+            let imageURLString = "\(API_BASE_URL)images/\(_imageName)"
+            if let URL = NSURL(string: imageURLString) {
+                if let data = NSData(contentsOfURL: URL) {
+                    self.image = UIImage(data: data)
+                }
+            }
+        }
+        if let _colorHex = data["brand_color_hex"] as? String {
+            if let _color = UIColor(hexString: _colorHex) {
+                if _color != self.color {
+                    self.color = _color
+                }
             }
         }
         let _lastUpdatedFromService = NSDate.fromAPIString(data["last_fetch"] as? String)
@@ -152,6 +178,12 @@ public class BSService: NSObject {
         if self.lastUpdatedFromService != rhs.lastUpdatedFromService {
             self.lastUpdatedFromService = rhs.lastUpdatedFromService
         }
+        if self.color != rhs.color {
+            self.color = rhs.color
+        }
+        if self.image != rhs.image {
+            self.image = rhs.image
+        }
         if self.url != rhs.url {
             self.url = rhs.url
         }
@@ -170,4 +202,32 @@ public class BSService: NSObject {
         return self.id == (object as? BSService)?.id
     }
 
+}
+
+extension UIColor {
+    public convenience init?(hexString: String) {
+        let r, g, b, a: CGFloat
+
+        if hexString.hasPrefix("#") {
+            let start = hexString.startIndex.advancedBy(1)
+            let hexColor = hexString.substringFromIndex(start)
+
+            if hexColor.characters.count == 8 {
+                let scanner = NSScanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexLongLong(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+                    
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+        
+        return nil
+    }
 }
