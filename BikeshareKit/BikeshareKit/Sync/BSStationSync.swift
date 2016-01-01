@@ -11,7 +11,7 @@ import Alamofire
 
 extension BSService {
     internal var stationsSyncPath: String {
-        get { return "\(API_BASE_URL)services/\(self.name!)/stations" }
+        get { return "\(API_BASE_URL)services/\(self.id)/stations" }
     }
     public func syncStations(callback: ((NSError?) -> Void)?) {
         Alamofire.request(.GET, stationsSyncPath)
