@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 
 internal let API_BASE_URL: String = "http://api.stationtostationapp.com/v1/"
+internal let IMAGE_BASE_URL: String = "http://api.stationtostationapp.com/images/"
 internal var _manager: BSManager!
 public class BSManager: NSObject {
 

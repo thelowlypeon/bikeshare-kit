@@ -130,7 +130,7 @@ public class BSService: NSObject {
         }
         //TODO lazy load the image
         if let _imageName = data["image"] as? String {
-            let imageURLString = "\(API_BASE_URL)images/\(_imageName)"
+            let imageURLString = "\(IMAGE_BASE_URL)\(_imageName)"
             if let URL = NSURL(string: imageURLString) {
                 if let data = NSData(contentsOfURL: URL) {
                     self.image = UIImage(data: data)
