@@ -12,16 +12,23 @@ import Alamofire
 internal let API_BASE_URL: String = "https://api.stationtostationapp.com/v1/"
 internal let IMAGE_BASE_URL: String = "https://api.stationtostationapp.com/images/"
 internal var _manager: BSManager!
+internal var _token: String!
+
 public class BSManager: NSObject {
 
     public dynamic var servicesUpdatedAt: NSDate?
     public dynamic var services = Set<BSService>()
     public dynamic var favoriteService: BSService?
 
+    public static func configure(config: [String: AnyObject]) {
+        if let token = config["token"] as? String {
+            _token = token
+        }
+    }
+
     public static func sharedManager() -> BSManager {
         if _manager == nil {
-            //TODO decide if .restore() should happen by default
-            _manager = BSManager()
+            _manager = BSManager(token: _token)
         }
         return _manager
     }
@@ -36,12 +43,8 @@ public class BSManager: NSObject {
         self.restoreFavoriteService()
     }
 
-    internal convenience init(restore: Bool) {
-        self.init()
-
-        if restore {
-            self.restore()
-        }
+    public init(token: String) {
+        _token = token
     }
 
     deinit {
