@@ -76,9 +76,15 @@ extension BSService {
             return nil
 
         } else {
+            var message = "Invalid station data: \(JSON)"
+            if let dict = JSON as? NSDictionary {
+                if let err = dict["error"] as? String {
+                    message = "Error sync station data: \(err)"
+                }
+            }
             return NSError(domain: "com.outofsomething",
                            code: -1,
-                           userInfo: [NSLocalizedDescriptionKey: "Invalid response: \(JSON)"])
+                           userInfo: [NSLocalizedDescriptionKey: message])
         }
     }
 

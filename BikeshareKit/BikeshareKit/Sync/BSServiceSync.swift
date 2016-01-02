@@ -65,9 +65,15 @@ extension BSManager {
             return nil
 
         } else {
+            var message = "Invalid service data: \(JSON)"
+            if let dict = JSON as? NSDictionary {
+                if let err = dict["error"] as? String {
+                    message = "Error syncing service data: \(err)"
+                }
+            }
             return NSError(domain: "com.outofsomething",
                            code: -1,
-                           userInfo: [NSLocalizedDescriptionKey: "Invalid response: \(JSON)"])
+                           userInfo: [NSLocalizedDescriptionKey: message])
         }
     }
 
