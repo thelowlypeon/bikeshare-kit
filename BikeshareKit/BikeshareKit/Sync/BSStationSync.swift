@@ -14,7 +14,7 @@ extension BSService {
         get { return "\(API_BASE_URL)services/\(self.id)/stations" }
     }
     public func syncStations(callback: ((NSError?) -> Void)? = nil, progress: ((Int64, Int64, Int64) -> Void)? = nil) {
-        Alamofire.request(.GET, stationsSyncPath)
+        request(.GET, stationsSyncPath)
             .progress(progress)
             .responseJSON(completionHandler: self.syncStationsCompletionHandler(callback))
     }

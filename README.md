@@ -30,11 +30,26 @@ Run unit tests in Xcode using cmd-U.
 
 ## Usage
 
+### Config
+
+You must send a valid token. Need a token? Contact [@thelowlypeon](https://github.com/thelowlypeon).
+
+```
+BSManager.configure(["token": "my_valid_auth_token"])
+//then:
+BSManager.sharedManager().syncServices() //...
+```
+
+Or:
+
+```
+let manager = BSManager(token: "my_valid_auth_token")
+```
+
 ### Get a list of all available Bikeshare Services
 
 ```
-let manager = BSManager()
-manager.syncServices({(error) -> Void in
+BSManager.sharedManager().syncServices({(error) -> Void in
     if error == nil {
         print("hooray! retrieved \(manager.services.count) services")
     } else {
@@ -48,21 +63,21 @@ manager.syncServices({(error) -> Void in
 Set a favorite service to avoid syncing or dealing with all services.
 
 ```
-manager.favoriteService = myFavoriteService
-manager.persist()
+BSManager.sharedManager().favoriteService = myFavoriteService
+BSManager.sharedManager().persist()
 ```
 
 ### Persist data locally to use until updates are available
 
 ```
 //on your app delegate's applicationWillResignActive()
-manager.persist()
+BSManager.sharedManager().persist()
 
 //on didFinishLaunchingWithOptions()
-manager = BSManager() //init calls restore()
+BSManager.sharedManager().restore()
 
-let countOfServicesOnLaunch = manager.services.count
-manager.syncServices({(error) -> Void in
+let countOfServicesOnLaunch = BSManager.sharedManager().services.count
+BSManager.sharedManager().syncServices({(error) -> Void in
     let newCount = manager.services.count
     print("retrieved \(newCount - countOfServicesOnLaunch) new services")
 })
@@ -75,7 +90,7 @@ You can observe changes in values using iOS's built in Key Value Observing, or K
 ```
 //in view controller
 override func viewDidAppear(animated: Bool) {
-    manager.addObserver(self, forKeyPath: "favoriteService.name", options: .New, context: nil)
+    BSManager.sharedManager().addObserver(self, forKeyPath: "favoriteService.name", options: .New, context: nil)
     super.viewDidAppear(animated)
 }
 
