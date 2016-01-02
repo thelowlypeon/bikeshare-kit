@@ -10,9 +10,10 @@ import Foundation
 import Alamofire
 
 extension BSManager {
-    public func syncServices(callback: ((NSError?) -> Void)?) {
+    public func syncServices(callback: ((NSError?) -> Void)? = nil, progress: ((Int64, Int64, Int64) -> Void)? = nil) {
         print("syncing services...")
         Alamofire.request(.GET, "\(API_BASE_URL)services")
+            .progress(progress)
             .responseJSON(completionHandler: self.syncServicesCompletionHandler(callback))
     }
 
