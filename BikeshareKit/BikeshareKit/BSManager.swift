@@ -13,6 +13,12 @@ internal let API_BASE_URL: String = "https://api.stationtostationapp.com/v1/"
 internal let IMAGE_BASE_URL: String = "https://api.stationtostationapp.com/images/"
 internal var _manager: BSManager!
 internal var _token: String!
+internal var _includeInactiveStations: Bool = false
+
+public enum BikeshareKitConfigOption: String {
+    case Token = "token"
+    case IncludeInactiveStations = "includeInactiveStations"
+}
 
 public class BSManager: NSObject {
 
@@ -20,9 +26,12 @@ public class BSManager: NSObject {
     public dynamic var services = Set<BSService>()
     public dynamic var favoriteService: BSService?
 
-    public static func configure(config: [String: AnyObject]) {
-        if let token = config["token"] as? String {
+    public static func configure(config: [BikeshareKitConfigOption: AnyObject]) {
+        if let token = config[.Token] as? String {
             _token = token
+        }
+        if let includeInactiveStations = config[.IncludeInactiveStations] as? Bool {
+            _includeInactiveStations = includeInactiveStations
         }
     }
 

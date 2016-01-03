@@ -30,8 +30,24 @@ class BSStationsSyncTests: XCTestCase {
         super.tearDown()
     }
 
-    func testStationsSyncFetchesStations() {
+    func testStationsSyncFetchesAllStations() {
         let expectedStationsCount = 475
+        BSManager.configure([.IncludeInactiveStations: true])
+
+        let expectation = expectationWithDescription("Mock response arrived")
+        service.syncStationsCompletionHandler({(error) in
+            expectation.fulfill()
+            XCTAssertNil(error)
+        })(mockResponse)
+
+        waitForExpectationsWithTimeout(10, handler: { _ -> Void in
+            XCTAssertEqual(self.service.stations.count, expectedStationsCount)
+        })
+    }
+
+    func testStationsSyncFetchesActiveStations() {
+        let expectedStationsCount = 474
+        BSManager.configure([.IncludeInactiveStations: false])
 
         let expectation = expectationWithDescription("Mock response arrived")
         service.syncStationsCompletionHandler({(error) in

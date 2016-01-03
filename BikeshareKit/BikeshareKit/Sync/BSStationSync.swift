@@ -47,7 +47,16 @@ extension BSService {
     internal func handleSuccessResponse(JSON: AnyObject?) -> NSError? {
         if let json = (JSON as? NSArray) as? [NSDictionary] {
 
-            let retrievedStations = Set(json.map{BSStation(data: $0)}.filter{$0 != nil}.map{$0!})
+            let retrievedStations = Set(json.map{
+                    BSStation(data: $0)
+                }.filter{
+                    $0 != nil
+                }.map{
+                    $0!
+                }.filter{
+                    $0.active || _includeInactiveStations
+                }
+            )
             print("initial count: \(self.stations.count), retrieved \(retrievedStations.count)")
 
             //determine new stations, add at the end
