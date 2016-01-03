@@ -32,10 +32,12 @@ Run unit tests in Xcode using cmd-U.
 
 ### Config
 
+#### Token
+
 You must send a valid token. Need a token? Contact [@thelowlypeon](https://github.com/thelowlypeon).
 
 ```
-BSManager.configure(["token": "my_valid_auth_token"])
+BSManager.configure([.Token: "my_valid_auth_token"])
 //then:
 BSManager.sharedManager().syncServices() //...
 ```
@@ -44,6 +46,14 @@ Or:
 
 ```
 let manager = BSManager(token: "my_valid_auth_token")
+```
+
+#### Active Stations
+
+By default, BikeshareKit will only return active stations. To include all, pass the following param:
+
+```
+BSManager.configure([.IncludeInactiveStations: true])
 ```
 
 ### Get a list of all available Bikeshare Services
