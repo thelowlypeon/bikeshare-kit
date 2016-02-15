@@ -11,6 +11,8 @@
 		D024BA341C38808B007CC0E4 /* AlamofireRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D024BA331C38808B007CC0E4 /* AlamofireRequestExtension.swift */; };
 		D0330AA41C35E3D30030A51A /* BSAvailabilityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0330AA31C35E3D30030A51A /* BSAvailabilityChart.swift */; };
 		D0330AA61C35E3FB0030A51A /* BSAvailabilityChartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0330AA51C35E3FB0030A51A /* BSAvailabilityChartItem.swift */; };
+		D0559B331C72868E001F3B13 /* BSLocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0559B321C72868E001F3B13 /* BSLocationServices.swift */; };
+		D0559B351C728B38001F3B13 /* BSClosestStationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0559B341C728B38001F3B13 /* BSClosestStationsTests.swift */; };
 		D070EAFC1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */; };
 		D070EB331C32DC4800818943 /* BSPersistentStationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */; };
 		D070EB381C32E1E400818943 /* BSAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB371C32E1E400818943 /* BSAvailability.swift */; };
@@ -98,6 +100,8 @@
 		D024BA331C38808B007CC0E4 /* AlamofireRequestExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestExtension.swift; sourceTree = "<group>"; };
 		D0330AA31C35E3D30030A51A /* BSAvailabilityChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilityChart.swift; sourceTree = "<group>"; };
 		D0330AA51C35E3FB0030A51A /* BSAvailabilityChartItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilityChartItem.swift; sourceTree = "<group>"; };
+		D0559B321C72868E001F3B13 /* BSLocationServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSLocationServices.swift; sourceTree = "<group>"; };
+		D0559B341C728B38001F3B13 /* BSClosestStationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSClosestStationsTests.swift; sourceTree = "<group>"; };
 		D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailabilitySyncTests.swift; sourceTree = "<group>"; };
 		D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentStationsTests.swift; sourceTree = "<group>"; };
 		D070EB371C32E1E400818943 /* BSAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailability.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 			children = (
 				D08AEE311C25CA79005D6980 /* NSDateExtension.swift */,
 				D024BA331C38808B007CC0E4 /* AlamofireRequestExtension.swift */,
+				D0559B321C72868E001F3B13 /* BSLocationServices.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 				D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */,
 				D08AEE411C28AB2F005D6980 /* BSServicesKVOTests.swift */,
 				D070EB3D1C32E95B00818943 /* BSFavoriteServiceTests.swift */,
+				D0559B341C728B38001F3B13 /* BSClosestStationsTests.swift */,
 				D024BA2A1C387DBB007CC0E4 /* TestHelper.swift */,
 			);
 			path = BikeshareKitTests;
@@ -448,6 +454,7 @@
 				D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */,
 				D0330AA61C35E3FB0030A51A /* BSAvailabilityChartItem.swift in Sources */,
 				D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */,
+				D0559B331C72868E001F3B13 /* BSLocationServices.swift in Sources */,
 				D0330AA41C35E3D30030A51A /* BSAvailabilityChart.swift in Sources */,
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
 				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,
@@ -470,6 +477,7 @@
 				D024BA2B1C387DBB007CC0E4 /* TestHelper.swift in Sources */,
 				D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */,
 				D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */,
+				D0559B351C728B38001F3B13 /* BSClosestStationsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

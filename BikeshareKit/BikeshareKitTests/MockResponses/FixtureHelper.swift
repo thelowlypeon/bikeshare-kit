@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import BikeshareKit
 
 extension XCTestCase {
     
@@ -26,6 +27,13 @@ extension XCTestCase {
             return NSData(contentsOfFile: fixturePath)
         }
         return nil
+    }
+
+    public func divvyFixture() -> BSService {
+        let divvy = BSService(id: 1, data: ["name": "divvy"])
+        let stationsJson = jsonFromFixture("StationsResponse.json")!
+        divvy.handleSuccessResponse(stationsJson)
+        return divvy
     }
 
 
