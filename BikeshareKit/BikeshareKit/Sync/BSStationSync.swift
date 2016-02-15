@@ -73,7 +73,6 @@ extension BSService {
             print("updating \(stationsToUpdate.count) stations")
             for rhs in stationsToUpdate {
                 let index = self.stations.indexOf(rhs)!
-                print("updating \(self.stations[index].name) with \(rhs.name)")
                 self.stations[index].replace(withStation: rhs)
             }
 

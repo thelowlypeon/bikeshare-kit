@@ -50,7 +50,6 @@ extension BSManager {
             print("updating \(servicesToUpdate.count) services")
             for rhs in servicesToUpdate {
                 let index = self.services.indexOf(rhs)!
-                print("updating \(self.services[index].name) with \(rhs.name)")
                 self.services[index].replace(withService: rhs)
             }
 
