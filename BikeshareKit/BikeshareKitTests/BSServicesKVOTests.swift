@@ -68,7 +68,8 @@ class BSServicesKVOTests: XCTestCase {
 
         var numCallbacks = 0
         observerCallback = {(change) in
-            if ++numCallbacks == 2 {
+            numCallbacks += 1
+            if numCallbacks == 2 {
                 expectation.fulfill()
             }
         }
@@ -93,9 +94,9 @@ class BSServicesKVOTests: XCTestCase {
 
         var notificationCount = 0
         observerCallback = {(change) in
-            let count = ++notificationCount
+            notificationCount += 1
             let service = change?[NSKeyValueChangeNewKey] as? BSService
-            switch count {
+            switch notificationCount {
             case 1:
                 XCTAssertEqual(service?.name, "divvy")
                 break

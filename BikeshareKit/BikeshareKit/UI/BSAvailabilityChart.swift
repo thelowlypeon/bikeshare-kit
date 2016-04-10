@@ -93,7 +93,7 @@ public class BSAvailabilityChart: UIView {
         self.backgroundColor = fill
         self.layer.masksToBounds = true
 
-        for var index = 0; index < items.count; index++ {
+        for (index, _) in items.enumerate() {
             self.layer.addSublayer(buildCircleLayer(forIndex: index))
         }
     }
