@@ -19,11 +19,36 @@ internal func request(
     -> Request
 {
 
-    var authorizedParameters: [String: AnyObject] = ["token": _token]
+    var authorizedParameters: [String: AnyObject] = [
+        "token": _token,
+        "uuid": BSManager.sharedManager()._uuid,
+        "version": (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown",
+        "build": (NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String) ?? ""
+    ]
+
     if parameters != nil {
         for (key, value) in parameters! {
             authorizedParameters.updateValue(value, forKey: key)
         }
     }
     return Alamofire.request(method, URLString, parameters: authorizedParameters, encoding: encoding, headers: headers)
+}
+
+private var uuid: String?
+private var _uuidKey = "uuid"
+extension BSManager {
+
+    private var _uuid: String {
+        if uuid == nil {
+            if let archived = NSUserDefaults.standardUserDefaults().stringForKey(_uuidKey) {
+                uuid = archived
+            } else {
+                uuid = NSUUID().UUIDString
+                NSUserDefaults.standardUserDefaults().setObject(uuid!, forKey: _uuidKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }
+        }
+        return uuid!
+    }
+
 }
