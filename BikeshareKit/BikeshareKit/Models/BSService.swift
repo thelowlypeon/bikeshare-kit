@@ -228,6 +228,7 @@ extension UIColor {
             }
         }
         
-        return nil
+        //TODO in swift 3, remove this and return nil. known bug https://bugs.swift.org/browse/SR-704
+        self.init(red: 0, green: 0, blue: 1, alpha: 1)
     }
 }
