@@ -31,15 +31,21 @@ public enum BSRouter: URLRequestConvertible {
     case Stations(BSService)
     case ServiceImage(String)
 
+    //note: if temporarily using localhost or other http:// service, add this to your application's Info.plist
+    //<key>NSAppTransportSecurity</key><dict><key>NSAllowsArbitraryLoads</key><true/></dict>
+    private static let API_BASE: String = "https://api.stationtostationapp.com"
+    private static let API_BASE_URL: String = "\(API_BASE)/v1/"
+    private static let IMAGE_BASE_URL: String = "\(API_BASE)/images/"
+
     public var URLRequest: NSMutableURLRequest {
         let (method, base, path): (Alamofire.Method, String, String) = {
             switch self {
             case .Services:
-                return (.GET, API_BASE_URL, "services")
+                return (.GET, BSRouter.API_BASE_URL, "services")
             case .Stations(let service):
-                return (.GET, API_BASE_URL, "services/\(service.id)/stations")
+                return (.GET, BSRouter.API_BASE_URL, "services/\(service.id)/stations")
             case .ServiceImage(let imageName):
-                return (.GET, IMAGE_BASE_URL, imageName)
+                return (.GET, BSRouter.IMAGE_BASE_URL, imageName)
             }
         }()
 

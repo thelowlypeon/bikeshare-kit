@@ -9,8 +9,6 @@
 import Foundation
 import Alamofire
 
-internal let API_BASE_URL: String = "https://api.stationtostationapp.com/v1/"
-internal let IMAGE_BASE_URL: String = "https://api.stationtostationapp.com/images/"
 internal var _manager: BSManager!
 internal var _token: String!
 internal var _includeInactiveStations: Bool = false

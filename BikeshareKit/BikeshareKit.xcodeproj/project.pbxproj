@@ -171,8 +171,8 @@
 		D08AEE301C25CA64005D6980 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D08AEE311C25CA79005D6980 /* NSDateExtension.swift */,
 				D024BA331C38808B007CC0E4 /* BSRouter.swift */,
+				D08AEE311C25CA79005D6980 /* NSDateExtension.swift */,
 				D0559B321C72868E001F3B13 /* BSLocationServices.swift */,
 			);
 			path = Common;
