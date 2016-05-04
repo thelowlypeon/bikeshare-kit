@@ -128,12 +128,10 @@ public class BSService: NSObject {
                 self.numberOfStations = _numberOfStations
             }
         }
-        //TODO lazy load the image
         if let _imageName = data["image"] as? String {
-            let imageURLString = "\(IMAGE_BASE_URL)\(_imageName)"
-            if let URL = NSURL(string: imageURLString) {
-                if let data = NSData(contentsOfURL: URL) {
-                    self.image = UIImage(data: data)
+            request(.GET, "\(IMAGE_BASE_URL)\(_imageName)").response() {(_, _, data, error) in
+                if error == nil && data != nil {
+                    self.image = UIImage(data: data!)
                 }
             }
         }
