@@ -12,7 +12,7 @@ import Alamofire
 extension BSManager {
     public func syncServices(callback: ((NSError?) -> Void)? = nil, progress: ((Int64, Int64, Int64) -> Void)? = nil) {
         print("syncing services...")
-        request(.GET, "\(API_BASE_URL)services")
+        Alamofire.request(BSRouter.Services)
             .progress(progress)
             .responseJSON(completionHandler: self.syncServicesCompletionHandler(callback))
     }

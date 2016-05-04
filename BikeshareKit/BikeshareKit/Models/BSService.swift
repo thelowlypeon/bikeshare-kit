@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 private let kBSServiceIDKey = "bikeshare_kit__service_id"
 private let kBSServiceNameKey = "bikeshare_kit__service_name"
@@ -129,7 +130,8 @@ public class BSService: NSObject {
             }
         }
         if let _imageName = data["image"] as? String {
-            request(.GET, "\(IMAGE_BASE_URL)\(_imageName)").response() {(_, _, data, error) in
+            Alamofire.request(BSRouter.ServiceImage(_imageName))
+                .response() {(_, _, data, error) in
                 if error == nil && data != nil {
                     self.image = UIImage(data: data!)
                 }
