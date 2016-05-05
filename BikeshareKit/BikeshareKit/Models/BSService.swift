@@ -130,10 +130,10 @@ public class BSService: NSObject {
             }
         }
         if let _imageName = data["image"] as? String {
-            Alamofire.request(BSRouter.ServiceImage(_imageName))
-                .response() {(_, _, data, error) in
-                if error == nil && data != nil {
-                    self.image = UIImage(data: data!)
+            //TODO make this async
+            if let URL = BSRouter.ServiceImage(_imageName).URLRequest.URL {
+                if let data = NSData(contentsOfURL: URL) {
+                    self.image = UIImage(data: data)
                 }
             }
         }
