@@ -26,7 +26,7 @@
 import Foundation
 import Alamofire
 
-public enum BSRouter: URLRequestConvertible {
+internal enum BSRouter {
     case Services
     case Stations(BSService)
     case ServiceImage(String)
@@ -37,30 +37,36 @@ public enum BSRouter: URLRequestConvertible {
     private static let API_BASE_URL: String = "\(API_BASE)/v1/"
     private static let IMAGE_BASE_URL: String = "\(API_BASE)/images/"
 
-    public var URLRequest: NSMutableURLRequest {
-        let (method, base, path): (Alamofire.Method, String, String) = {
+    internal var URLRequest: NSMutableURLRequest {
+        let (method, imagePath, path): (BSRouterMethod, Bool, String) = {
             switch self {
             case .Services:
-                return (.GET, BSRouter.API_BASE_URL, "services")
+                return (.GET, false, "services")
             case .Stations(let service):
-                return (.GET, BSRouter.API_BASE_URL, "services/\(service.id)/stations")
+                return (.GET, false, "services/\(service.id)/stations")
             case .ServiceImage(let imageName):
-                return (.GET, BSRouter.IMAGE_BASE_URL, imageName)
+                return (.GET, true, imageName)
             }
         }()
 
-        let URL = NSURL(string: base)
-        let URLRequest = NSMutableURLRequest(URL: URL!.URLByAppendingPathComponent(path))
-        URLRequest.HTTPMethod = method.rawValue
-        let encoding = Alamofire.ParameterEncoding.URL
-        return encoding.encode(URLRequest, parameters: BSRouter.authorizedParameters).0
+        let URL = NSURL(string: imagePath ? BSRouter.IMAGE_BASE_URL : BSRouter.API_BASE_URL)!.URLByAppendingPathComponent(path)
+        let URLWithParams = NSURLComponents(URL: URL, resolvingAgainstBaseURL: true)!
+        URLWithParams.queryItems = BSRouter.authorizedParameters
+        let request = NSMutableURLRequest(URL: URLWithParams.URL!)
+
+        if !imagePath {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.HTTPMethod = method.rawValue
+        }
+        return request
     }
 
-    static var authorizedParameters: [String: AnyObject] = [
-        "token": _token,
-        "uuid": BSManager.sharedManager()._uuid,
-        "version": (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown",
-        "build": (NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String) ?? ""
+    private static var authorizedParameters: [NSURLQueryItem] = [
+        NSURLQueryItem(name: "token", value: _token),
+        NSURLQueryItem(name: "uuid", value: BSManager.sharedManager()._uuid),
+        NSURLQueryItem(name: "version", value: (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown"),
+        NSURLQueryItem(name: "build", value: (NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String) ?? "")
     ]
 
 }
@@ -84,3 +90,6 @@ extension BSManager {
 
 }
 
+enum BSRouterMethod: String {
+    case OPTIONS, GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, CONNECT
+}
