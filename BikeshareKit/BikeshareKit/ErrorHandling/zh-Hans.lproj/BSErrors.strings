@@ -1,0 +1,22 @@
+/* 
+  BSErrors.strings
+  BikeshareKit
+
+  Created by Peter Compernolle on 6/23/16.
+  Copyright © 2016 Out of Something, LLC. All rights reserved.
+*/
+
+/* The API returned an empty response or the response was not received */
+"errors.api.response.empty" = "Failed to update: no response";
+
+/* The API returned an invalid response or the response was in an invalid format */
+"errors.api.response.invalid" = "Failed to update: invalid response";
+
+/* The request to the API was rejected because it was not authorized */
+"errors.api.unauthorized" = "Failed to update: unauthorized";
+
+/* The request to the API was rejected because it was malformed */
+"errors.api.request.invalid" = "Failed to update: invalid request";
+
+/* The API returned an unknown error */
+"errors.api.unknown" = "Failed to update: unknown error";

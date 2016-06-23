@@ -1,0 +1,10 @@
+/* 
+  Common.strings
+  BikeshareKit
+
+  Created by Peter Compernolle on 6/23/16.
+  Copyright © 2016 Out of Something, LLC. All rights reserved.
+*/
+
+/* Displayed when loading, or when a label has not been provided */
+"loading..." = "loading...";
