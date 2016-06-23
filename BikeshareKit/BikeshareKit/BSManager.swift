@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 internal var _manager: BSManager!
 internal var _token: String!
