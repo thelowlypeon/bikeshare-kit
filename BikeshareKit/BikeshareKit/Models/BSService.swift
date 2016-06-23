@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 private let kBSServiceIDKey = "bikeshare_kit__service_id"
 private let kBSServiceNameKey = "bikeshare_kit__service_name"
