@@ -127,7 +127,7 @@ public class BSStation: NSObject {
     }
 
     override public var description: String {
-        return self.name ?? "loading..."
+        return self.name ?? NSLocalizedString("loading...", comment: "Displayed if the API doesn't return a name for this station")
     }
 
     override public var hashValue: Int { return self.id }

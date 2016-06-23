@@ -192,7 +192,7 @@ public class BSService: NSObject {
     }
 
     override public var description: String {
-        return self.name ?? "loading..."
+        return self.name ?? NSLocalizedString("loading...", comment: "Displayed if no name is returned from the API")
     }
 
     override public var hashValue: Int { return self.id }

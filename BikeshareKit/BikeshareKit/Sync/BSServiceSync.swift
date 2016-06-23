@@ -21,14 +21,14 @@ extension BSManager {
 
             if error != nil {
                 callback?(error)
-            } else if data == nil {
-                callback?(BSErrorCodes.EmptyResponseFromAPI.error("Invalid response"))
+            } else if let failure = BSRouter.validateResponse(data, response: response) {
+                callback?(failure)
             } else {
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                     callback?(self.handleSuccessResponse(json))
                 } catch {
-                    callback?(BSErrorCodes.InvalidResponseFromAPI.error("Invalid service data format"))
+                    callback?(BSErrorType.InvalidResponse)
                 }
             }
         }
@@ -68,13 +68,7 @@ extension BSManager {
             return nil
 
         } else {
-            var message = "Invalid service data: \(JSON)"
-            if let dict = JSON as? NSDictionary {
-                if let err = dict["error"] as? String {
-                    message = "Error syncing service data: \(err)"
-                }
-            }
-            return BSErrorCodes.ServerError.error(message)
+            return BSErrorType.InvalidResponse
         }
     }
 

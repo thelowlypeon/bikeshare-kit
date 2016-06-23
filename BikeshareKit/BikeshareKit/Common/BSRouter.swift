@@ -55,6 +55,7 @@ internal enum BSRouter {
         let URLWithParams = NSURLComponents(URL: URL, resolvingAgainstBaseURL: true)!
         URLWithParams.queryItems = BSRouter.authorizedParameters
         let request = NSMutableURLRequest(URL: URLWithParams.URL!)
+        request.setValue(NSBundle.mainBundle().preferredLocalizations.first, forHTTPHeaderField: "Accept-Language")
 
         if !imagePath {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -62,6 +63,22 @@ internal enum BSRouter {
             request.HTTPMethod = method.rawValue
         }
         return request
+    }
+
+    internal static func validateResponse(data: NSData?, response: NSURLResponse?) -> NSError? {
+        if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
+            if statusCode >= 200 && statusCode < 400 {
+                return data == nil ? BSErrorType.EmptyResponse : nil
+            } else {
+                switch statusCode {
+                case 401: return BSErrorType.Unauthorized
+                case 406: return BSErrorType.InvalidRequest
+                case 500: return BSErrorType.Unknown
+                default: break
+                }
+            }
+        }
+        return BSErrorType.InvalidResponse
     }
 
     private static var authorizedParameters: [NSURLQueryItem] = [
