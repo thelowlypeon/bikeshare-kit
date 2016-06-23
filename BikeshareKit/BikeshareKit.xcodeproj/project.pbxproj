@@ -17,6 +17,7 @@
 		D070EB331C32DC4800818943 /* BSPersistentStationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */; };
 		D070EB381C32E1E400818943 /* BSAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB371C32E1E400818943 /* BSAvailability.swift */; };
 		D070EB3E1C32E95B00818943 /* BSFavoriteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070EB3D1C32E95B00818943 /* BSFavoriteServiceTests.swift */; };
+		D0863CF21D1C140D00DB7CC2 /* BSErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0863CF11D1C140D00DB7CC2 /* BSErrorCodes.swift */; };
 		D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE2E1C25CA50005D6980 /* BSService.swift */; };
 		D08AEE321C25CA79005D6980 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE311C25CA79005D6980 /* NSDateExtension.swift */; };
 		D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE341C25CABD005D6980 /* BSServiceSync.swift */; };
@@ -56,6 +57,7 @@
 		D070EB321C32DC4800818943 /* BSPersistentStationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSPersistentStationsTests.swift; sourceTree = "<group>"; };
 		D070EB371C32E1E400818943 /* BSAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSAvailability.swift; sourceTree = "<group>"; };
 		D070EB3D1C32E95B00818943 /* BSFavoriteServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSFavoriteServiceTests.swift; sourceTree = "<group>"; };
+		D0863CF11D1C140D00DB7CC2 /* BSErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSErrorCodes.swift; sourceTree = "<group>"; };
 		D08AEE2E1C25CA50005D6980 /* BSService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSService.swift; sourceTree = "<group>"; };
 		D08AEE311C25CA79005D6980 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		D08AEE341C25CABD005D6980 /* BSServiceSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSServiceSync.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				D024BA331C38808B007CC0E4 /* BSRouter.swift */,
 				D08AEE311C25CA79005D6980 /* NSDateExtension.swift */,
 				D0559B321C72868E001F3B13 /* BSLocationServices.swift */,
+				D0863CF11D1C140D00DB7CC2 /* BSErrorCodes.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				D0330AA61C35E3FB0030A51A /* BSAvailabilityChartItem.swift in Sources */,
 				D08AEE351C25CABD005D6980 /* BSServiceSync.swift in Sources */,
 				D0559B331C72868E001F3B13 /* BSLocationServices.swift in Sources */,
+				D0863CF21D1C140D00DB7CC2 /* BSErrorCodes.swift in Sources */,
 				D0330AA41C35E3D30030A51A /* BSAvailabilityChart.swift in Sources */,
 				D08AEE2F1C25CA50005D6980 /* BSService.swift in Sources */,
 				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,

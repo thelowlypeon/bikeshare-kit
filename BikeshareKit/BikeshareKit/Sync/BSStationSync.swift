@@ -87,9 +87,7 @@ extension BSService {
                     message = "Error syncing station data: \(err)"
                 }
             }
-            return NSError(domain: "com.outofsomething",
-                           code: -1,
-                           userInfo: [NSLocalizedDescriptionKey: message])
+            return BSErrorCodes.ServerError.error(message)
         }
     }
 

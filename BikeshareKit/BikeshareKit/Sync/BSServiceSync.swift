@@ -70,9 +70,7 @@ extension BSManager {
                     message = "Error syncing service data: \(err)"
                 }
             }
-            return NSError(domain: "com.outofsomething",
-                           code: -1,
-                           userInfo: [NSLocalizedDescriptionKey: message])
+            return BSErrorCodes.ServerError.error(message)
         }
     }
 

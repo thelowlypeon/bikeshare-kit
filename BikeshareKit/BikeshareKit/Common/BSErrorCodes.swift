@@ -9,5 +9,11 @@
 import Foundation
 
 public enum BSErrorCodes: Int {
-    case EmptyResponseFromAPI, InvalidResponseFromAPI
+    case EmptyResponseFromAPI = 10001
+    case InvalidResponseFromAPI = 10002
+    case ServerError = 10003
+
+    func error(localizedDescription: String) -> NSError {
+        return NSError(domain: "com.outofsomething.BikeshareKit", code: self.rawValue, userInfo: [NSLocalizedDescriptionKey: localizedDescription])
+    }
 }
