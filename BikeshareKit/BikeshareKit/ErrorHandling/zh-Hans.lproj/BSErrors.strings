@@ -7,16 +7,16 @@
 */
 
 /* The API returned an empty response or the response was not received */
-"errors.api.response.empty" = "Failed to update: no response";
+"errors.api.response.empty" = "错误: 没有反应";
 
 /* The API returned an invalid response or the response was in an invalid format */
-"errors.api.response.invalid" = "Failed to update: invalid response";
+"errors.api.response.invalid" = "错误: 无效响应";
 
 /* The request to the API was rejected because it was not authorized */
-"errors.api.unauthorized" = "Failed to update: unauthorized";
+"errors.api.unauthorized" = "错误: 擅自";
 
 /* The request to the API was rejected because it was malformed */
-"errors.api.request.invalid" = "Failed to update: invalid request";
+"errors.api.request.invalid" = "错误: 无效的请求";
 
 /* The API returned an unknown error */
-"errors.api.unknown" = "Failed to update: unknown error";
+"errors.api.unknown" = "错误: 未知错误";
