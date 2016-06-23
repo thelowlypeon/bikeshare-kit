@@ -7,29 +7,33 @@
 //
 
 import Foundation
-import Alamofire
 
 extension BSManager {
-    public func syncServices(callback: ((NSError?) -> Void)? = nil, progress: ((Int64, Int64, Int64) -> Void)? = nil) {
-        print("syncing services...")
-        Alamofire.request(BSRouter.Services)
-            .progress(progress)
-            .responseJSON(completionHandler: self.syncServicesCompletionHandler(callback))
+
+    public func syncServices(callback: ((NSError?) -> Void)? = nil) {
+        print("Syncing services...")
+        BSRouter.Services.request(self.syncServicesCompletionHandler(callback))
     }
 
-    internal func syncServicesCompletionHandler(callback: ((NSError?) -> Void)? = nil) -> (Response<AnyObject, NSError> -> Void) {
-        print("received response from syncing")
-        return {[weak self](response) -> Void in
-            switch response.result {
-            case .Success(let JSON):
-                callback?(self?.handleSuccessResponse(JSON))
-                break
-            case .Failure(let error):
+    internal func syncServicesCompletionHandler(callback: ((NSError?) -> Void)? = nil) -> ((NSData?, NSURLResponse?, NSError?) -> Void) {
+        return {[weak self](data, response, error) in
+            guard let `self` = self else { return }
+
+            if error != nil {
                 callback?(error)
-                break
+            } else if data == nil {
+                callback?(BSErrorCodes.EmptyResponseFromAPI.error("Invalid response"))
+            } else {
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                    callback?(self.handleSuccessResponse(json))
+                } catch {
+                    callback?(BSErrorCodes.InvalidResponseFromAPI.error("Invalid service data format"))
+                }
             }
         }
     }
+
 
     internal func handleSuccessResponse(JSON: AnyObject?) -> NSError? {
         if let json = (JSON as? NSArray) as? [NSDictionary] {

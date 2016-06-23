@@ -7,24 +7,29 @@
 //
 
 import Foundation
-import Alamofire
 
 extension BSService {
-    public func syncStations(callback: ((NSError?) -> Void)? = nil, progress: ((Int64, Int64, Int64) -> Void)? = nil) {
-        Alamofire.request(BSRouter.Stations(self))
-            .progress(progress)
-            .responseJSON(completionHandler: self.syncStationsCompletionHandler(callback))
+
+    public func syncStations(callback: ((NSError?) -> Void)? = nil) {
+        print("Syncing stations in \(self)")
+        BSRouter.Stations(self).request(self.syncStationsCompletionHandler(callback))
     }
 
-    internal func syncStationsCompletionHandler(callback: ((NSError?) -> Void)?) -> (Response<AnyObject, NSError> -> Void) {
-        return {[weak self](response) -> Void in
-            switch response.result {
-            case .Success(let JSON):
-                callback?(self?.handleSuccessResponse(JSON))
-                break
-            case .Failure(let error):
+    internal func syncStationsCompletionHandler(callback: ((NSError?) -> Void)? = nil) -> ((NSData?, NSURLResponse?, NSError?) -> Void) {
+        return {[weak self](data, response, error) in
+            guard let `self` = self else { return }
+
+            if error != nil {
                 callback?(error)
-                break
+            } else if data == nil {
+                callback?(BSErrorCodes.EmptyResponseFromAPI.error("Invalid response"))
+            } else {
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                    callback?(self.handleSuccessResponse(json))
+                } catch {
+                    callback?(BSErrorCodes.InvalidResponseFromAPI.error("Invalid station data format"))
+                }
             }
         }
     }

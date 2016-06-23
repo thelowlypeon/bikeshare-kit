@@ -20,11 +20,13 @@
 //
 //  Then call the method as needed using:
 //
-//     Alamofire.request(ODCAPIRouter.MyEndpointType(param))
-//              .responseJSON { ... }
+//     NSURLSession.sharedSession().dataTaskWithRequest(BSRouter.MyEndpointType(param).URLRequest) {(data, response, error) in
+//         ...
+//     }
+//
+//  Externally, call BSRouter.MyEndpointType(param).request(completion)
 
 import Foundation
-import Alamofire
 
 internal enum BSRouter {
     case Services
@@ -68,6 +70,17 @@ internal enum BSRouter {
         NSURLQueryItem(name: "version", value: (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown"),
         NSURLQueryItem(name: "build", value: (NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String) ?? "")
     ]
+
+}
+
+extension BSRouter {
+
+    internal func request(completionHandler: ((NSData?, NSURLResponse?, NSError?) -> Void)?) {
+        (completionHandler != nil ?
+            NSURLSession.sharedSession().dataTaskWithRequest(self.URLRequest, completionHandler: completionHandler!) :
+            NSURLSession.sharedSession().dataTaskWithRequest(self.URLRequest)
+        ).resume()
+    }
 
 }
 
