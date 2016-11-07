@@ -17,23 +17,23 @@ private let kBSStationLocationKey = "bikeshare_kit__station_location"
 private let kBSStationAvailabilityKey = "bikeshare_kit__station_availability"
 private let kBSStationUpdatedAtKey = "bikeshare_kit__station_updated_at"
 
-public class BSStation: NSObject {
+open class BSStation: NSObject {
     internal dynamic var id: Int
 
-    public dynamic var active: Bool = false
-    public dynamic var name: String?
-    public dynamic var totalDocks: Int = 0
-    public dynamic var inactiveDocks: Int {
+    open dynamic var active: Bool = false
+    open dynamic var name: String?
+    open dynamic var totalDocks: Int = 0
+    open dynamic var inactiveDocks: Int {
         get {
             return self.availability != nil ?
                 totalDocks - (self.availability!.bikes + self.availability!.docks)
                 : 0
         }
     }
-    public dynamic var location: CLLocation?
-    public dynamic var availability: BSAvailability?
+    open dynamic var location: CLLocation?
+    open dynamic var availability: BSAvailability?
 
-    public dynamic var updatedAt = NSDate()
+    open dynamic var updatedAt = Date()
 
     public init(id: Int, data: NSDictionary) {
         self.id = id
@@ -50,34 +50,34 @@ public class BSStation: NSObject {
     }
 
     // Archiving & Initializers
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.id, forKey: kBSStationIDKey)
-        aCoder.encodeObject(self.active, forKey: kBSStationActiveKey)
-        aCoder.encodeObject(self.name, forKey: kBSStationNameKey)
-        aCoder.encodeObject(self.totalDocks, forKey: kBSStationTotalDocksKey)
-        aCoder.encodeObject(self.location, forKey: kBSStationLocationKey)
-        aCoder.encodeObject(self.availability, forKey: kBSStationAvailabilityKey)
-        aCoder.encodeObject(self.updatedAt, forKey: kBSStationUpdatedAtKey)
+    open func encodeWithCoder(_ aCoder: NSCoder) {
+        aCoder.encode(self.id, forKey: kBSStationIDKey)
+        aCoder.encode(self.active, forKey: kBSStationActiveKey)
+        aCoder.encode(self.name, forKey: kBSStationNameKey)
+        aCoder.encode(self.totalDocks, forKey: kBSStationTotalDocksKey)
+        aCoder.encode(self.location, forKey: kBSStationLocationKey)
+        aCoder.encode(self.availability, forKey: kBSStationAvailabilityKey)
+        aCoder.encode(self.updatedAt, forKey: kBSStationUpdatedAtKey)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         //required fields
-        self.id = aDecoder.decodeObjectForKey(kBSStationIDKey) as! Int
+        self.id = aDecoder.decodeObject(forKey: kBSStationIDKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSStationIDKey)
 
         //fields with defaults
-        self.active = (aDecoder.decodeObjectForKey(kBSStationActiveKey) as? Bool) ?? false
-        self.updatedAt = (aDecoder.decodeObjectForKey(kBSStationUpdatedAtKey) as? NSDate) ?? NSDate()
-        self.totalDocks = aDecoder.decodeObjectForKey(kBSStationTotalDocksKey) as? Int ?? 0
+        self.active = aDecoder.decodeObject(forKey: kBSStationActiveKey) as? Bool ?? aDecoder.decodeBool(forKey: kBSStationActiveKey)
+        self.updatedAt = aDecoder.decodeObject(forKey: kBSStationUpdatedAtKey) as? Date ?? Date()
+        self.totalDocks = aDecoder.decodeObject(forKey: kBSStationTotalDocksKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSStationTotalDocksKey)
 
         //optional fields
-        self.name = aDecoder.decodeObjectForKey(kBSStationNameKey) as? String
-        self.location = aDecoder.decodeObjectForKey(kBSStationLocationKey) as? CLLocation
-        self.availability = aDecoder.decodeObjectForKey(kBSStationAvailabilityKey) as? BSAvailability
+        self.name = aDecoder.decodeObject(forKey: kBSStationNameKey) as? String
+        self.location = aDecoder.decodeObject(forKey: kBSStationLocationKey) as? CLLocation
+        self.availability = aDecoder.decodeObject(forKey: kBSStationAvailabilityKey) as? BSAvailability
 
         super.init()
     }
 
-    public func update(data: NSDictionary) {
+    open func update(_ data: NSDictionary) {
         let _name = data["name"] as? String
         if _name != name {
             self.name = _name
@@ -103,10 +103,10 @@ public class BSStation: NSObject {
             }
         }
 
-        updatedAt = NSDate()
+        updatedAt = Date()
     }
 
-    public func replace(withStation rhs: BSStation) {
+    open func replace(withStation rhs: BSStation) {
         if self.active != rhs.active {
             self.active = rhs.active
         }
@@ -123,16 +123,16 @@ public class BSStation: NSObject {
             self.availability = rhs.availability
         }
 
-        updatedAt = NSDate()
+        updatedAt = Date()
     }
 
-    override public var description: String {
+    override open var description: String {
         return self.name ?? NSLocalizedString("loading...", comment: "Displayed if the API doesn't return a name for this station")
     }
 
-    override public var hashValue: Int { return self.id }
+    override open var hashValue: Int { return self.id }
 
-    override public func isEqual(object: AnyObject?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         return self.id == (object as? BSStation)?.id
     }
 

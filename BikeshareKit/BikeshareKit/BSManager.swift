@@ -17,13 +17,13 @@ public enum BikeshareKitConfigOption: String {
     case IncludeInactiveStations = "includeInactiveStations"
 }
 
-public class BSManager: NSObject {
+open class BSManager: NSObject {
 
-    public dynamic var servicesUpdatedAt: NSDate?
-    public dynamic var services = Set<BSService>()
-    public dynamic var favoriteService: BSService?
+    open dynamic var servicesUpdatedAt: Date?
+    open dynamic var services = Set<BSService>()
+    open dynamic var favoriteService: BSService?
 
-    public static func configure(config: [BikeshareKitConfigOption: AnyObject]) {
+    open static func configure(_ config: [BikeshareKitConfigOption: Any]) {
         if let token = config[.Token] as? String {
             _token = token
         }
@@ -32,19 +32,19 @@ public class BSManager: NSObject {
         }
     }
 
-    public static func sharedManager() -> BSManager {
+    open static func sharedManager() -> BSManager {
         if _manager == nil {
             _manager = BSManager(token: _token)
         }
         return _manager
     }
 
-    public func persist() {
+    open func persist() {
         self.persistServices()
         self.persistFavoriteService()
     }
 
-    public func restore() {
+    open func restore() {
         self.restoreServices()
         self.restoreFavoriteService()
     }

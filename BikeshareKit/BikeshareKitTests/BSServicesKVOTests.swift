@@ -12,7 +12,7 @@ import XCTest
 class BSServicesKVOTests: XCTestCase {
     var manager: BSManager!
 
-    var observerCallback: ([String: AnyObject]? -> Void)?
+    var observerCallback: (([NSKeyValueChangeKey: Any]?) -> Void)?
     var currentlyObservingKeyPath: String?
 
     override func setUp() {
@@ -30,20 +30,20 @@ class BSServicesKVOTests: XCTestCase {
         super.tearDown()
     }
 
-    func observeKeyPath(keyPath: String) {
+    func observeKeyPath(_ keyPath: String) {
         currentlyObservingKeyPath = keyPath
-        manager.addObserver(self, forKeyPath: currentlyObservingKeyPath!, options: .New, context: nil)
+        manager.addObserver(self, forKeyPath: currentlyObservingKeyPath!, options: .new, context: nil)
     }
 
     func testFavoriteServiceIsKVOCompliantForNew() {
-        let expectation = expectationWithDescription("Received observer notification for new")
+        let expectation = self.expectation(description: "Received observer notification for new")
         observeKeyPath("favoriteService")
 
         let divvy = BSService(id: 1, data: ["name": "divvy"])
         let citi = BSService(id: 2, data: ["name": "citibikenyc"])
 
         observerCallback = {(change) in
-            if let change = change?[NSKeyValueChangeNewKey] {
+            if let change = change?[.newKey] {
                 expectation.fulfill()
                 XCTAssertEqual((change as? BSService)?.id, divvy.id)
             } else {
@@ -54,13 +54,13 @@ class BSServicesKVOTests: XCTestCase {
         manager.services = [divvy, citi]
         manager.favoriteService = divvy
 
-        waitForExpectationsWithTimeout(10, handler: { _ -> Void in
+        waitForExpectations(timeout: 10, handler: { _ -> Void in
             XCTAssertTrue(true)
         })
     }
 
     func testFavoriteServiceIsKVOCompliantForChange() {
-        let expectation = expectationWithDescription("Received observer notification for change")
+        let expectation = self.expectation(description: "Received observer notification for change")
         observeKeyPath("favoriteService")
 
         let divvy = BSService(id: 1, data: ["name": "divvy"])
@@ -78,14 +78,14 @@ class BSServicesKVOTests: XCTestCase {
         manager.favoriteService = divvy
         manager.favoriteService = citi
 
-        waitForExpectationsWithTimeout(10, handler: { _ -> Void in
+        waitForExpectations(timeout: 10, handler: { _ -> Void in
             XCTAssertTrue(true)
         })
     }
 
 
     func testFavoriteServiceDoesntTriggerChangeForNestedChange() {
-        let expectation = expectationWithDescription("Received observer notification for change")
+        let expectation = self.expectation(description: "Received observer notification for change")
         observeKeyPath("favoriteService")
 
         let divvy = BSService(id: 1, data: ["name": "divvy"])
@@ -95,7 +95,7 @@ class BSServicesKVOTests: XCTestCase {
         var notificationCount = 0
         observerCallback = {(change) in
             notificationCount += 1
-            let service = change?[NSKeyValueChangeNewKey] as? BSService
+            let service = change?[.newKey] as? BSService
             switch notificationCount {
             case 1:
                 XCTAssertEqual(service?.name, "divvy")
@@ -111,17 +111,16 @@ class BSServicesKVOTests: XCTestCase {
 
         manager.services = [divvy, citi]
         manager.favoriteService = divvy //second notification
-        let index = manager.services.indexOf(divvy)!
+        let index = manager.services.index(of: divvy)!
         manager.services[index].replace(withService: updatedDivvy)
         manager.favoriteService = citi //fulfill
 
-        waitForExpectationsWithTimeout(10, handler: { _ -> Void in
+        waitForExpectations(timeout: 10, handler: { _ -> Void in
             XCTAssertEqual(citi, self.manager.favoriteService)
         })
     }
 
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        //print("observed \(change) at \(keyPath), loking for \(currentlyObservingKeyPath)")
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == currentlyObservingKeyPath {
             observerCallback?(change)
         }

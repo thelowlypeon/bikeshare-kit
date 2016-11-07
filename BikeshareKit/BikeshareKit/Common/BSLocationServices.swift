@@ -15,7 +15,7 @@ extension BSService {
     // note: - does NOT guarantee an array of n stations
     //       - this is O(nlogn), so if you only need one station, use closestStation:toLocation
     public func closestStations(toLocation location: CLLocation, limit: Int = 3) -> [BSStation] {
-        return Array(self.stations.sort({(a, b) -> Bool in
+        return Array(self.stations.sorted(by: {(a, b) -> Bool in
             return location.distanceToStation(a, isLessThan: b)
         }).prefix(limit))
     }
@@ -27,7 +27,7 @@ extension BSService {
         var shortestDistance: CLLocationDistance?
         var closestStation: BSStation?
         for station in self.stations {
-            if let distance = station.location?.distanceFromLocation(location) {
+            if let distance = station.location?.distance(from: location) {
                 if shortestDistance == nil || distance < shortestDistance! {
                     shortestDistance = distance
                     closestStation = station
@@ -40,9 +40,9 @@ extension BSService {
 }
 
 extension CLLocation {
-    public func distanceToStation(lhs: BSStation, isLessThan rhs: BSStation) -> Bool {
+    public func distanceToStation(_ lhs: BSStation, isLessThan rhs: BSStation) -> Bool {
         if lhs.location != nil && rhs.location != nil {
-            return self.distanceFromLocation(lhs.location!) < self.distanceFromLocation(rhs.location!)
+            return self.distance(from: lhs.location!) < self.distance(from: rhs.location!)
         }
         return lhs.location != nil
     }

@@ -14,24 +14,24 @@ class BSPersistentStationsTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        NSUserDefaults.resetStandardUserDefaults()
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.resetStandardUserDefaults()
+        UserDefaults.standard.synchronize()
     }
     
     override func tearDown() {
         super.tearDown()
     }
 
-    private let STATION_KEY = "bikesharekit_tests__station_key"
+    fileprivate let STATION_KEY = "bikesharekit_tests__station_key"
     func testStationsAreArchivedWithServie() {
         let buckingham = BSStation(id: 1, data: ["name": "buckingham"])
-        buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: NSDate())
+        buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: Date())
 
-        let data = NSKeyedArchiver.archivedDataWithRootObject(buckingham)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: STATION_KEY)
+        let data = NSKeyedArchiver.archivedData(withRootObject: buckingham)
+        UserDefaults.standard.set(data, forKey: STATION_KEY)
 
-        if let unarchivedStationData = NSUserDefaults.standardUserDefaults().objectForKey(STATION_KEY) as? NSData {
-            if let unarchivedStation = NSKeyedUnarchiver.unarchiveObjectWithData(unarchivedStationData) as? BSStation {
+        if let unarchivedStationData = UserDefaults.standard.object(forKey: STATION_KEY) as? Data {
+            if let unarchivedStation = NSKeyedUnarchiver.unarchiveObject(with: unarchivedStationData) as? BSStation {
                 XCTAssertEqual(unarchivedStation.name, buckingham.name)
                 XCTAssertNotNil(unarchivedStation.availability)
                 XCTAssertEqual(unarchivedStation.availability?.bikes, 1)

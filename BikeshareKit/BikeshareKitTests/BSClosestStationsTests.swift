@@ -45,7 +45,7 @@ class BSClosestStationsTests: XCTestCase {
         let stations = service.closestStations(toLocation: belmontAndLSD, limit: service.stations.count)
         for station in stations {
             if let stationLocation = station.location {
-                let distance = belmontAndLSD.distanceFromLocation(stationLocation)
+                let distance = belmontAndLSD.distance(from: stationLocation)
                 XCTAssert(previousDistance <= distance)
                 previousDistance = distance
             }

@@ -11,7 +11,7 @@ import XCTest
 
 class BSStationsSyncTests: XCTestCase {
     var service: BSService!
-    var stationsJson: AnyObject!
+    var stationsJson: Any!
 
     override func setUp() {
         super.setUp()
@@ -40,13 +40,13 @@ class BSStationsSyncTests: XCTestCase {
         let expectedStationsCount = 474
         BSManager.configure([.IncludeInactiveStations: false])
 
-        service.handleSuccessResponse(stationsJson)
+        let _ = service.handleSuccessResponse(stationsJson)
 
         XCTAssertEqual(self.service.stations.count, expectedStationsCount)
     }
 
     func testStationsSyncSetsFields() {
-        service.handleSuccessResponse(stationsJson)
+        let _ = service.handleSuccessResponse(stationsJson)
 
         let buckinghamData = (stationsJson as! [NSDictionary]).first
         let expectedBuckingham = BSStation(id: 1, data: buckinghamData!)

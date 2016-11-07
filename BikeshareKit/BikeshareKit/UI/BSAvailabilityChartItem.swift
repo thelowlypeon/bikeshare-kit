@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class BSAvailabilityChartItem: NSObject {
-    public var value: CGFloat
-    public var color: UIColor
+open class BSAvailabilityChartItem: NSObject {
+    open var value: CGFloat
+    open var color: UIColor
 
     public init(value: CGFloat, color: UIColor) {
         self.value = value

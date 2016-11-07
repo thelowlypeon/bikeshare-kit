@@ -12,15 +12,15 @@ private let kBSAvailabilityBikesKey = "bikeshare_kit__availability_bikes"
 private let kBSAvailabilityDocksKey = "bikeshare_kit__availability_docks"
 private let kBSAvailabilityEffectiveDateKey = "bikeshare_kit__availability_effective_date"
 
-public class BSAvailability: NSObject {
-    public let bikes: Int
-    public let docks: Int
-    public let effectiveDate: NSDate
-    public var effectiveSince: NSTimeInterval {
-        return NSDate().timeIntervalSinceDate(effectiveDate)
+open class BSAvailability: NSObject {
+    open let bikes: Int
+    open let docks: Int
+    open let effectiveDate: Date
+    open var effectiveSince: TimeInterval {
+        return Date().timeIntervalSince(effectiveDate)
     }
 
-    public init(bikes: Int, docks: Int, effectiveDate: NSDate) {
+    public init(bikes: Int, docks: Int, effectiveDate: Date) {
         self.bikes = bikes
         self.docks = docks
         self.effectiveDate = effectiveDate
@@ -30,7 +30,7 @@ public class BSAvailability: NSObject {
     public convenience init?(data: NSDictionary) {
         let _bikes = data["bikes"] as? Int
         let _docks = data["docks"] as? Int
-        let _effectiveDate = NSDate.fromAPIString(data["effective_date"] as? String)
+        let _effectiveDate = Date.fromAPIString(data["effective_date"] as? String)
 
         if _bikes != nil && _docks != nil && _effectiveDate != nil {
             self.init(bikes: _bikes!, docks: _docks!, effectiveDate: _effectiveDate!)
@@ -40,28 +40,28 @@ public class BSAvailability: NSObject {
     }
 
     // Archiving & Initializers
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.bikes, forKey: kBSAvailabilityBikesKey)
-        aCoder.encodeObject(self.docks, forKey: kBSAvailabilityDocksKey)
-        aCoder.encodeObject(self.effectiveDate, forKey: kBSAvailabilityEffectiveDateKey)
+    open func encodeWithCoder(_ aCoder: NSCoder) {
+        aCoder.encode(self.bikes, forKey: kBSAvailabilityBikesKey)
+        aCoder.encode(self.docks, forKey: kBSAvailabilityDocksKey)
+        aCoder.encode(self.effectiveDate, forKey: kBSAvailabilityEffectiveDateKey)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         //required fields
-        self.bikes = aDecoder.decodeObjectForKey(kBSAvailabilityBikesKey) as! Int
-        self.docks = aDecoder.decodeObjectForKey(kBSAvailabilityDocksKey) as! Int
-        self.effectiveDate = aDecoder.decodeObjectForKey(kBSAvailabilityEffectiveDateKey) as! NSDate
+        self.bikes = aDecoder.decodeObject(forKey: kBSAvailabilityBikesKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSAvailabilityBikesKey)
+        self.docks = aDecoder.decodeObject(forKey: kBSAvailabilityDocksKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSAvailabilityDocksKey)
+        self.effectiveDate = aDecoder.decodeObject(forKey: kBSAvailabilityEffectiveDateKey) as! Date
 
         super.init()
     }
 
-    override public var description: String {
+    override open var description: String {
         let minAgo = Int(floor(effectiveSince / 60))
         let effectiveSinceString = minAgo < 1 ? "just now" : "\(minAgo) minutes ago"
         return "\(bikes) bikes, \(docks) docks as of \(effectiveSinceString)"
     }
 
-    override public func isEqual(object: AnyObject?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         if let other = object as? BSAvailability {
             return bikes == other.bikes && docks == other.docks && effectiveDate == other.effectiveDate
         }

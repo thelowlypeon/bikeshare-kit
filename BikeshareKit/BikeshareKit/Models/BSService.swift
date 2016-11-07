@@ -22,25 +22,25 @@ private let kBSServiceUpdatedFromService = "bikeshare_kit__service_last_updated_
 private let kBSServiceUpdatedAt = "bikeshare_kit__service_updated_at"
 private let kBSServiceStationsKey = "bikeshare_kit__service_stations"
 
-public class BSService: NSObject {
+open class BSService: NSObject {
     internal dynamic var id: Int
 
-    public dynamic var name: String?
-    public dynamic var city: String?
-    public dynamic var url: NSURL?
-    public dynamic var color: UIColor = UIColor(red: 0.2, green: 0.7, blue: 0.92, alpha: 1) //default to divvy colors
-    public dynamic var image: UIImage?
+    open dynamic var name: String?
+    open dynamic var city: String?
+    open dynamic var url: URL?
+    open dynamic var color: UIColor = UIColor(red: 0.2, green: 0.7, blue: 0.92, alpha: 1) //default to divvy colors
+    open dynamic var image: UIImage?
 
-    public dynamic var numberOfDocks: Int = 0
-    public dynamic var numberOfBikesAvailable: Int = 0
-    public dynamic var numberOfDocksAvailable: Int = 0
-    public dynamic var numberOfStations: Int = 0
+    open dynamic var numberOfDocks: Int = 0
+    open dynamic var numberOfBikesAvailable: Int = 0
+    open dynamic var numberOfDocksAvailable: Int = 0
+    open dynamic var numberOfStations: Int = 0
 
-    public dynamic var lastUpdatedFromService: NSDate?
-    public dynamic var updatedAt = NSDate()
+    open dynamic var lastUpdatedFromService: Date?
+    open dynamic var updatedAt = Date()
 
-    public dynamic var stationsUpdatedAt: NSDate?
-    public dynamic var stations = Set<BSStation>()
+    open dynamic var stationsUpdatedAt: Date?
+    open dynamic var stations = Set<BSStation>()
 
     public init(id: Int, data: NSDictionary) {
         self.id = id
@@ -57,49 +57,49 @@ public class BSService: NSObject {
     }
 
     // Archiving & Initializers
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.id, forKey: kBSServiceIDKey)
-        aCoder.encodeObject(self.name, forKey: kBSServiceNameKey)
-        aCoder.encodeObject(self.city, forKey: kBSServiceCityKey)
-        aCoder.encodeObject(self.color, forKey: kBSServiceColorKey)
-        aCoder.encodeObject(self.image, forKey: kBSServiceImageKey)
-        aCoder.encodeObject(self.numberOfDocks, forKey: kBSServiceNumberOfDocksKey)
-        aCoder.encodeObject(self.numberOfBikesAvailable, forKey: kBSServiceNumberOfBikesAvailableKey)
-        aCoder.encodeObject(self.numberOfDocksAvailable, forKey: kBSServiceNumberOfDocksAvailableKey)
-        aCoder.encodeObject(self.numberOfStations, forKey: kBSServiceNumberOfStationsKey)
-        aCoder.encodeObject(self.url, forKey: kBSServiceURLKey)
-        aCoder.encodeObject(self.lastUpdatedFromService, forKey: kBSServiceUpdatedFromService)
-        aCoder.encodeObject(self.updatedAt, forKey: kBSServiceUpdatedAt)
+    open func encodeWithCoder(_ aCoder: NSCoder) {
+        aCoder.encode(self.id, forKey: kBSServiceIDKey)
+        aCoder.encode(self.name, forKey: kBSServiceNameKey)
+        aCoder.encode(self.city, forKey: kBSServiceCityKey)
+        aCoder.encode(self.color, forKey: kBSServiceColorKey)
+        aCoder.encode(self.image, forKey: kBSServiceImageKey)
+        aCoder.encode(self.numberOfDocks, forKey: kBSServiceNumberOfDocksKey)
+        aCoder.encode(self.numberOfBikesAvailable, forKey: kBSServiceNumberOfBikesAvailableKey)
+        aCoder.encode(self.numberOfDocksAvailable, forKey: kBSServiceNumberOfDocksAvailableKey)
+        aCoder.encode(self.numberOfStations, forKey: kBSServiceNumberOfStationsKey)
+        aCoder.encode(self.url, forKey: kBSServiceURLKey)
+        aCoder.encode(self.lastUpdatedFromService, forKey: kBSServiceUpdatedFromService)
+        aCoder.encode(self.updatedAt, forKey: kBSServiceUpdatedAt)
 
-        aCoder.encodeObject(self.stations, forKey: kBSServiceStationsKey)
+        aCoder.encode(self.stations, forKey: kBSServiceStationsKey)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         //required fields
-        self.id = aDecoder.decodeObjectForKey(kBSServiceIDKey) as! Int
+        self.id = aDecoder.decodeObject(forKey: kBSServiceIDKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceIDKey)
 
         //fields with defaults
-        self.updatedAt = (aDecoder.decodeObjectForKey(kBSServiceUpdatedAt) as? NSDate) ?? NSDate()
-        self.stations = (aDecoder.decodeObjectForKey(kBSServiceStationsKey) as? Set<BSStation>) ?? Set<BSStation>()
-        self.numberOfDocks = (aDecoder.decodeObjectForKey(kBSServiceNumberOfDocksKey) as? Int) ?? 0
-        self.numberOfBikesAvailable = (aDecoder.decodeObjectForKey(kBSServiceNumberOfBikesAvailableKey) as? Int) ?? 0
-        self.numberOfDocksAvailable = (aDecoder.decodeObjectForKey(kBSServiceNumberOfDocksAvailableKey) as? Int) ?? 0
-        self.numberOfStations = (aDecoder.decodeObjectForKey(kBSServiceNumberOfStationsKey) as? Int) ?? 0
-        if let _color = aDecoder.decodeObjectForKey(kBSServiceColorKey) as? UIColor {
+        self.updatedAt = (aDecoder.decodeObject(forKey: kBSServiceUpdatedAt) as? Date) ?? Date()
+        self.stations = (aDecoder.decodeObject(forKey: kBSServiceStationsKey) as? Set<BSStation>) ?? Set<BSStation>()
+        self.numberOfDocks = aDecoder.decodeObject(forKey: kBSServiceNumberOfDocksKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceNumberOfDocksKey)
+        self.numberOfBikesAvailable = aDecoder.decodeObject(forKey: kBSServiceNumberOfBikesAvailableKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceNumberOfBikesAvailableKey)
+        self.numberOfDocksAvailable = aDecoder.decodeObject(forKey: kBSServiceNumberOfDocksAvailableKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceNumberOfDocksAvailableKey)
+        self.numberOfStations = aDecoder.decodeObject(forKey: kBSServiceNumberOfStationsKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceNumberOfStationsKey)
+        if let _color = aDecoder.decodeObject(forKey: kBSServiceColorKey) as? UIColor {
             self.color = _color
         }
 
         //optional fields
-        self.name = aDecoder.decodeObjectForKey(kBSServiceNameKey) as? String
-        self.city = aDecoder.decodeObjectForKey(kBSServiceCityKey) as? String
-        self.image = aDecoder.decodeObjectForKey(kBSServiceImageKey) as? UIImage
-        self.url = aDecoder.decodeObjectForKey(kBSServiceURLKey) as? NSURL
-        self.lastUpdatedFromService = aDecoder.decodeObjectForKey(kBSServiceUpdatedFromService) as? NSDate
+        self.name = aDecoder.decodeObject(forKey: kBSServiceNameKey) as? String
+        self.city = aDecoder.decodeObject(forKey: kBSServiceCityKey) as? String
+        self.image = aDecoder.decodeObject(forKey: kBSServiceImageKey) as? UIImage
+        self.url = aDecoder.decodeObject(forKey: kBSServiceURLKey) as? URL
+        self.lastUpdatedFromService = aDecoder.decodeObject(forKey: kBSServiceUpdatedFromService) as? Date
 
         super.init()
     }
 
-    public func update(data: NSDictionary) {
+    open func update(_ data: NSDictionary) {
         let _name = data["name"] as? String
         if _name != name {
             self.name = _name
@@ -130,8 +130,8 @@ public class BSService: NSObject {
         }
         if let _imageName = data["image"] as? String {
             //TODO make this async
-            if let URL = BSRouter.ServiceImage(_imageName).URLRequest.URL {
-                if let data = NSData(contentsOfURL: URL) {
+            if let URL = BSRouter.serviceImage(_imageName).URLRequest.url {
+                if let data = try? Data(contentsOf: URL) {
                     self.image = UIImage(data: data)
                 }
             }
@@ -143,19 +143,19 @@ public class BSService: NSObject {
                 }
             }
         }
-        let _lastUpdatedFromService = NSDate.fromAPIString(data["last_fetch"] as? String)
+        let _lastUpdatedFromService = Date.fromAPIString(data["last_fetch"] as? String)
         if _lastUpdatedFromService != lastUpdatedFromService {
             self.lastUpdatedFromService = _lastUpdatedFromService
         }
-        let _url = NSURL(string: (data["url"] as? String) ?? "")
+        let _url = URL(string: (data["url"] as? String) ?? "")
         if _url != url {
             self.url = _url
         }
 
-        updatedAt = NSDate()
+        updatedAt = Date()
     }
 
-    public func replace(withService rhs: BSService) {
+    open func replace(withService rhs: BSService) {
         if self.name != rhs.name {
             self.name = rhs.name
         }
@@ -188,16 +188,16 @@ public class BSService: NSObject {
         }
         self.stations = rhs.stations
 
-        updatedAt = NSDate()
+        updatedAt = Date()
     }
 
-    override public var description: String {
+    override open var description: String {
         return self.name ?? NSLocalizedString("loading...", comment: "Displayed if no name is returned from the API")
     }
 
-    override public var hashValue: Int { return self.id }
+    override open var hashValue: Int { return self.id }
 
-    override public func isEqual(object: AnyObject?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         return self.id == (object as? BSService)?.id
     }
 
@@ -208,14 +208,14 @@ extension UIColor {
         let r, g, b, a: CGFloat
 
         if hexString.hasPrefix("#") {
-            let start = hexString.startIndex.advancedBy(1)
-            let hexColor = hexString.substringFromIndex(start)
+            let start = hexString.characters.index(hexString.startIndex, offsetBy: 1)
+            let hexColor = hexString.substring(from: start)
 
             if hexColor.characters.count == 8 {
-                let scanner = NSScanner(string: hexColor)
+                let scanner = Scanner(string: hexColor)
                 var hexNumber: UInt64 = 0
 
-                if scanner.scanHexLongLong(&hexNumber) {
+                if scanner.scanHexInt64(&hexNumber) {
                     r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
                     g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
                     b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255

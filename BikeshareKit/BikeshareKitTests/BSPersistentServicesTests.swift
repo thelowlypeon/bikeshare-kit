@@ -15,8 +15,8 @@ class BSPersistentServicesTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        NSUserDefaults.resetStandardUserDefaults()
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.resetStandardUserDefaults()
+        UserDefaults.standard.synchronize()
 
         self.manager = BSManager()
     }
@@ -68,7 +68,7 @@ class BSPersistentServicesTests: XCTestCase {
     func testStationsAreArchivedWithService() {
         let divvy = BSService(id: 1, data: ["name": "divvy"])
         let buckingham = BSStation(id: 1, data: ["name": "buckingham"])
-        buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: NSDate())
+        buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: Date())
         divvy.stations = [buckingham]
         manager.services = [divvy]
         manager.favoriteService = divvy

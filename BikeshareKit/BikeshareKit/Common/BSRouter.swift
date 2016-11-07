@@ -29,44 +29,44 @@
 import Foundation
 
 internal enum BSRouter {
-    case Services
-    case Stations(BSService)
-    case ServiceImage(String)
+    case services
+    case stations(BSService)
+    case serviceImage(String)
 
     //note: if temporarily using localhost or other http:// service, add this to your application's Info.plist
     //<key>NSAppTransportSecurity</key><dict><key>NSAllowsArbitraryLoads</key><true/></dict>
-    private static let API_BASE: String = "https://api.stationtostationapp.com"
-    private static let API_BASE_URL: String = "\(API_BASE)/v1/"
-    private static let IMAGE_BASE_URL: String = "\(API_BASE)/images/"
+    fileprivate static let API_BASE: String = "https://api.stationtostationapp.com"
+    fileprivate static let API_BASE_URL: String = "\(API_BASE)/v1/"
+    fileprivate static let IMAGE_BASE_URL: String = "\(API_BASE)/images/"
 
-    internal var URLRequest: NSMutableURLRequest {
+    internal var URLRequest: URLRequest {
         let (method, imagePath, path): (BSRouterMethod, Bool, String) = {
             switch self {
-            case .Services:
+            case .services:
                 return (.GET, false, "services")
-            case .Stations(let service):
+            case .stations(let service):
                 return (.GET, false, "services/\(service.id)/stations")
-            case .ServiceImage(let imageName):
+            case .serviceImage(let imageName):
                 return (.GET, true, imageName)
             }
         }()
 
-        let URL = NSURL(string: imagePath ? BSRouter.IMAGE_BASE_URL : BSRouter.API_BASE_URL)!.URLByAppendingPathComponent(path)
-        let URLWithParams = NSURLComponents(URL: URL, resolvingAgainstBaseURL: true)!
+        let URL = Foundation.URL(string: imagePath ? BSRouter.IMAGE_BASE_URL : BSRouter.API_BASE_URL)!.appendingPathComponent(path)
+        var URLWithParams = URLComponents(url: URL, resolvingAgainstBaseURL: true)!
         URLWithParams.queryItems = BSRouter.authorizedParameters
-        let request = NSMutableURLRequest(URL: URLWithParams.URL!)
-        request.setValue(NSBundle.mainBundle().preferredLocalizations.first, forHTTPHeaderField: "Accept-Language")
+        let request = NSMutableURLRequest(url: URLWithParams.url!)
+        request.setValue(Bundle.main.preferredLocalizations.first, forHTTPHeaderField: "Accept-Language")
 
         if !imagePath {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.HTTPMethod = method.rawValue
+            request.httpMethod = method.rawValue
         }
-        return request
+        return request as URLRequest
     }
 
-    internal static func validateResponse(data: NSData?, response: NSURLResponse?) -> NSError? {
-        if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
+    internal static func validateResponse(_ data: Data?, response: URLResponse?) -> NSError? {
+        if let statusCode = (response as? HTTPURLResponse)?.statusCode {
             if statusCode >= 200 && statusCode < 400 {
                 return data == nil ? BSErrorType.EmptyResponse : nil
             } else {
@@ -81,21 +81,21 @@ internal enum BSRouter {
         return BSErrorType.InvalidResponse
     }
 
-    private static var authorizedParameters: [NSURLQueryItem] = [
-        NSURLQueryItem(name: "token", value: _token),
-        NSURLQueryItem(name: "uuid", value: BSManager.sharedManager()._uuid),
-        NSURLQueryItem(name: "version", value: (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown"),
-        NSURLQueryItem(name: "build", value: (NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String) ?? "")
+    fileprivate static var authorizedParameters: [URLQueryItem] = [
+        URLQueryItem(name: "token", value: _token),
+        URLQueryItem(name: "uuid", value: BSManager.sharedManager()._uuid),
+        URLQueryItem(name: "version", value: (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown"),
+        URLQueryItem(name: "build", value: (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "")
     ]
 
 }
 
 extension BSRouter {
 
-    internal func request(completionHandler: ((NSData?, NSURLResponse?, NSError?) -> Void)?) {
+    internal func request(_ completionHandler: ((Data?, URLResponse?, Error?) -> Void)?) {
         (completionHandler != nil ?
-            NSURLSession.sharedSession().dataTaskWithRequest(self.URLRequest, completionHandler: completionHandler!) :
-            NSURLSession.sharedSession().dataTaskWithRequest(self.URLRequest)
+            URLSession.shared.dataTask(with: self.URLRequest, completionHandler: completionHandler!) :
+            URLSession.shared.dataTask(with: self.URLRequest)
         ).resume()
     }
 
@@ -105,14 +105,14 @@ private var uuid: String?
 private var _uuidKey = "uuid"
 extension BSManager {
 
-    private var _uuid: String {
+    fileprivate var _uuid: String {
         if uuid == nil {
-            if let archived = NSUserDefaults.standardUserDefaults().stringForKey(_uuidKey) {
+            if let archived = UserDefaults.standard.string(forKey: _uuidKey) {
                 uuid = archived
             } else {
-                uuid = NSUUID().UUIDString
-                NSUserDefaults.standardUserDefaults().setObject(uuid!, forKey: _uuidKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
+                uuid = UUID().uuidString
+                UserDefaults.standard.set(uuid!, forKey: _uuidKey)
+                UserDefaults.standard.synchronize()
             }
         }
         return uuid!

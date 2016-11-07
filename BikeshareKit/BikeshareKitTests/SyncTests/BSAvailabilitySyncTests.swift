@@ -11,7 +11,7 @@ import XCTest
 
 class BSAvailabilitySyncTests: XCTestCase {
     var service: BSService!
-    var stationsJson: AnyObject!
+    var stationsJson: Any!
 
     override func setUp() {
         super.setUp()
@@ -27,15 +27,15 @@ class BSAvailabilitySyncTests: XCTestCase {
     }
 
     func testStationsSyncUpdatesAvailability() {
-        let expectedEffectiveDate = NSDate.fromAPIString("2015-12-22T18:25:07.000Z")!
-        let expiredAvailability = BSAvailability(bikes: 10, docks: 23, effectiveDate: expectedEffectiveDate.dateByAddingTimeInterval(-1000))
+        let expectedEffectiveDate = Date.fromAPIString("2015-12-22T18:25:07.000Z")!
+        let expiredAvailability = BSAvailability(bikes: 10, docks: 23, effectiveDate: expectedEffectiveDate.addingTimeInterval(-1000))
         let expectedAvailability = BSAvailability(bikes: 11, docks: 22, effectiveDate: expectedEffectiveDate)
 
         service.stations = [BSStation(id: 1, data: ["name": "Buckingham"])]
         let buckingham = service.stations.first!
         buckingham.availability = expiredAvailability
 
-        service.handleSuccessResponse(stationsJson)
+        let _ = service.handleSuccessResponse(stationsJson)
 
         XCTAssertNotNil(buckingham.availability)
         XCTAssertEqual(buckingham.availability!.bikes, expectedAvailability.bikes)
@@ -44,13 +44,13 @@ class BSAvailabilitySyncTests: XCTestCase {
     }
 
     func testStationsSyncSetsAvailabilityWhenPreviouslyNone() {
-        let expectedEffectiveDate = NSDate.fromAPIString("2015-12-22T18:25:07.000Z")!
+        let expectedEffectiveDate = Date.fromAPIString("2015-12-22T18:25:07.000Z")!
         let expectedAvailability = BSAvailability(bikes: 11, docks: 22, effectiveDate: expectedEffectiveDate)
 
         service.stations = [BSStation(id: 1, data: ["name": "Buckingham"])]
         let buckingham = service.stations.first!
 
-        service.handleSuccessResponse(stationsJson)
+        let _ = service.handleSuccessResponse(stationsJson)
 
         XCTAssertNotNil(buckingham.availability)
         XCTAssertEqual(buckingham.availability!.bikes, expectedAvailability.bikes)

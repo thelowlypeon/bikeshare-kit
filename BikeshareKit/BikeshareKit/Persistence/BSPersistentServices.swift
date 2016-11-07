@@ -13,22 +13,22 @@ private var kBSManagerFavoriteServiceID = "bikeshare_kit__favorite_service_id"
 extension BSManager {
 
     public func persistServices() {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(services)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: kBSManagerServices)
+        let data = NSKeyedArchiver.archivedData(withRootObject: services)
+        UserDefaults.standard.set(data, forKey: kBSManagerServices)
     }
 
     public func persistFavoriteService() {
         if let service = favoriteService {
-            NSUserDefaults.standardUserDefaults().setInteger(service.id, forKey: kBSManagerFavoriteServiceID)
+            UserDefaults.standard.set(service.id, forKey: kBSManagerFavoriteServiceID)
         } else {
             //cannot remove integer for some reason, so set it to invalid ID
-            NSUserDefaults.standardUserDefaults().setInteger(-1, forKey: kBSManagerFavoriteServiceID)
+            UserDefaults.standard.set(-1, forKey: kBSManagerFavoriteServiceID)
         }
     }
 
     public func restoreServices() {
-        if let unarchivedServicesData = NSUserDefaults.standardUserDefaults().objectForKey(kBSManagerServices) as? NSData {
-            if let unarchivedServices = NSKeyedUnarchiver.unarchiveObjectWithData(unarchivedServicesData) as? Set<BSService> {
+        if let unarchivedServicesData = UserDefaults.standard.object(forKey: kBSManagerServices) as? Data {
+            if let unarchivedServices = NSKeyedUnarchiver.unarchiveObject(with: unarchivedServicesData) as? Set<BSService> {
                 self.services = unarchivedServices
             }
         }
@@ -37,7 +37,7 @@ extension BSManager {
     //caution! do this only after services are restored or otherwise populated
     // calling this with no services in self.services will remove favorite
     public func restoreFavoriteService() {
-        let favoriteServiceID = NSUserDefaults.standardUserDefaults().integerForKey(kBSManagerFavoriteServiceID)
+        let favoriteServiceID = UserDefaults.standard.integer(forKey: kBSManagerFavoriteServiceID)
         // do not call refreshFavoriteService because that will yield a different service instance
         self.favoriteService = self.services.filter{$0.id == favoriteServiceID}.first
     }

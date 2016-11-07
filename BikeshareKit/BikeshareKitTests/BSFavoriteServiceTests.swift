@@ -15,8 +15,8 @@ class BSFavoriteServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        NSUserDefaults.resetStandardUserDefaults()
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.resetStandardUserDefaults()
+        UserDefaults.standard.synchronize()
         manager = BSManager()
     }
     

@@ -10,12 +10,12 @@ import Foundation
 
 extension BSService {
 
-    public func syncStations(callback: ((NSError?) -> Void)? = nil) {
+    public func syncStations(_ callback: ((Error?) -> Void)? = nil) {
         print("Syncing stations in \(self)")
-        BSRouter.Stations(self).request(self.syncStationsCompletionHandler(callback))
+        BSRouter.stations(self).request(self.syncStationsCompletionHandler(callback))
     }
 
-    internal func syncStationsCompletionHandler(callback: ((NSError?) -> Void)? = nil) -> ((NSData?, NSURLResponse?, NSError?) -> Void) {
+    internal func syncStationsCompletionHandler(_ callback: ((Error?) -> Void)? = nil) -> ((Data?, URLResponse?, Error?) -> Void) {
         return {[weak self](data, response, error) in
             guard let `self` = self else { return }
 
@@ -25,8 +25,8 @@ extension BSService {
                 callback?(failure)
             } else {
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                    callback?(self.handleSuccessResponse(json))
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+                    callback?(self.handleSuccessResponse(json as AnyObject?))
                 } catch {
                     callback?(BSErrorType.InvalidResponse)
                 }
@@ -46,7 +46,7 @@ extension BSService {
      * TODO: determine if this causes significant performance issues
      *       Complexity: O(n)
      */
-    internal func handleSuccessResponse(JSON: AnyObject?) -> NSError? {
+    internal func handleSuccessResponse(_ JSON: Any?) -> NSError? {
         if let json = (JSON as? NSArray) as? [NSDictionary] {
 
             let retrievedStations = Set(json.map{
@@ -62,27 +62,27 @@ extension BSService {
             print("initial count: \(self.stations.count), retrieved \(retrievedStations.count)")
 
             //determine new stations, add at the end
-            let stationsToAdd = retrievedStations.subtract(self.stations)
+            let stationsToAdd = retrievedStations.subtracting(self.stations)
             print("found \(stationsToAdd.count) stations to add")
 
             //remove old
-            let stationsToRemove = self.stations.subtract(retrievedStations)
-            self.stations.subtractInPlace(stationsToRemove)
+            let stationsToRemove = self.stations.subtracting(retrievedStations)
+            self.stations.subtract(stationsToRemove)
             print("just removed outdated stations. current count: \(self.stations.count)")
 
             //update existing
-            let stationsToUpdate = retrievedStations.intersect(self.stations)
+            let stationsToUpdate = retrievedStations.intersection(self.stations)
             print("updating \(stationsToUpdate.count) stations")
             for rhs in stationsToUpdate {
-                let index = self.stations.indexOf(rhs)!
+                let index = self.stations.index(of: rhs)!
                 self.stations[index].replace(withStation: rhs)
             }
 
             //add new
             print("adding \(stationsToAdd.count) stations")
-            self.stations.unionInPlace(stationsToAdd)
+            self.stations.formUnion(stationsToAdd)
 
-            stationsUpdatedAt = NSDate()
+            stationsUpdatedAt = Date()
             return nil
 
         } else {

@@ -12,19 +12,19 @@ import XCTest
 
 extension XCTestCase {
     
-    public func jsonFromFixture(filename: String) -> AnyObject? {
+    public func jsonFromFixture(_ filename: String) -> Any? {
         if let data = self.dataFromFixture(filename) {
             do {
-                return try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {}
         }
         return nil
     }
 
-    public func dataFromFixture(filename: String) -> NSData? {
-        let bundle = NSBundle(identifier: "com.outofsomething.BikeshareKitTests")
-        if let fixturePath = bundle?.pathForResource(filename, ofType: nil) {
-            return NSData(contentsOfFile: fixturePath)
+    public func dataFromFixture(_ filename: String) -> Data? {
+        let bundle = Bundle(identifier: "com.outofsomething.BikeshareKitTests")
+        if let fixturePath = bundle?.path(forResource: filename, ofType: nil) {
+            return (try? Data(contentsOf: URL(fileURLWithPath: fixturePath)))
         }
         return nil
     }
@@ -32,7 +32,7 @@ extension XCTestCase {
     public func divvyFixture() -> BSService {
         let divvy = BSService(id: 1, data: ["name": "divvy"])
         let stationsJson = jsonFromFixture("StationsResponse.json")!
-        divvy.handleSuccessResponse(stationsJson)
+        let _ = divvy.handleSuccessResponse(stationsJson)
         return divvy
     }
 

@@ -8,15 +8,15 @@
 
 import Foundation
 
-private var APIDateFormatter: NSDateFormatter = {
-    let formatter = NSDateFormatter()
+private var APIDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    formatter.timeZone = NSTimeZone(name: "UTC")
+    formatter.timeZone = TimeZone(identifier: "UTC")
     return formatter
 }()
 
-extension NSDate {
-    public static func fromAPIString(string: String?) -> NSDate? {
-        return string != nil ? APIDateFormatter.dateFromString(string!) : nil
+extension Date {
+    public static func fromAPIString(_ string: String?) -> Date? {
+        return string != nil ? APIDateFormatter.date(from: string!) : nil
     }
 }

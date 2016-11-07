@@ -35,7 +35,7 @@ class BSServicesSyncTests: XCTestCase {
     }
 
     func testServicesSyncSetsFields() {
-        manager.handleSuccessResponse(mockJSON)
+        let _ = manager.handleSuccessResponse(mockJSON)
 
         XCTAssertNotNil(self.manager.servicesUpdatedAt)
         for service in self.manager.services {
@@ -50,7 +50,7 @@ class BSServicesSyncTests: XCTestCase {
         let divvy = BSService(id: 1, data: ["name": "divvy", "city": "The Windy City"])
         manager.services = [divvy]
 
-        manager.handleSuccessResponse(mockJSON)
+        let _ = manager.handleSuccessResponse(mockJSON)
 
         XCTAssertTrue(self.manager.services.contains(divvy))
         for service in self.manager.services {
@@ -65,7 +65,7 @@ class BSServicesSyncTests: XCTestCase {
         let outdatedService = BSService(id: 19, data: ["city": "Lamesville"])
         manager.services = [outdatedService]
 
-        manager.handleSuccessResponse(mockJSON)
+        let _ = manager.handleSuccessResponse(mockJSON)
 
         XCTAssertFalse(self.manager.services.contains(outdatedService))
     }
@@ -76,7 +76,7 @@ class BSServicesSyncTests: XCTestCase {
         manager.services = [favoriteService]
         manager.favoriteService = manager.services.first
 
-        manager.handleSuccessResponse(mockJSON)
+        let _ = manager.handleSuccessResponse(mockJSON)
 
         XCTAssertNotNil(self.manager.favoriteService)
         XCTAssertEqual(self.manager.favoriteService?.name, "divvy")
