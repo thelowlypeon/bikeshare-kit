@@ -7,13 +7,13 @@
 */
 
 /* The API returned an empty response or the response was not received */
-"errors.api.response.empty" = "错误: 没有反应";
+"errors.api.response.empty" = "错误: 无响应";
 
 /* The API returned an invalid response or the response was in an invalid format */
 "errors.api.response.invalid" = "错误: 无效响应";
 
 /* The request to the API was rejected because it was not authorized */
-"errors.api.unauthorized" = "错误: 擅自";
+"errors.api.unauthorized" = "错误: 未经授权";
 
 /* The request to the API was rejected because it was malformed */
 "errors.api.request.invalid" = "错误: 无效的请求";
