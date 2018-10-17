@@ -27,10 +27,12 @@
 //  Externally, call BSRouter.MyEndpointType(param).request(completion)
 
 import Foundation
+import CoreLocation
 
 internal enum BSRouter {
     case services
     case stations(BSService)
+    case nearbyStations(CLLocationCoordinate2D, Int?)
     case serviceImage(String)
 
     //note: if temporarily using localhost or other http:// service, add this to your application's Info.plist
@@ -40,20 +42,28 @@ internal enum BSRouter {
     fileprivate static let IMAGE_BASE_URL: String = "\(API_BASE)/images/"
 
     internal var URLRequest: URLRequest {
-        let (method, imagePath, path): (BSRouterMethod, Bool, String) = {
+        let (method, imagePath, path, params): (BSRouterMethod, Bool, String, [URLQueryItem]) = {
             switch self {
             case .services:
-                return (.GET, false, "services")
+                return (.GET, false, "services", [])
             case .stations(let service):
-                return (.GET, false, "services/\(service.id)/stations")
+                return (.GET, false, "services/\(service.id)/stations", [])
+            case .nearbyStations(let coordinate, let count):
+                let count = count ?? 3
+                let params = [
+                    URLQueryItem(name: "latitude", value: "\(coordinate.latitude)"),
+                    URLQueryItem(name: "longitude", value: "\(coordinate.longitude)"),
+                    URLQueryItem(name: "limit", value: "\(count)")
+                ]
+                return (.GET, false, "stations/nearest", params)
             case .serviceImage(let imageName):
-                return (.GET, true, imageName)
+                return (.GET, true, imageName, [])
             }
         }()
 
         let URL = Foundation.URL(string: imagePath ? BSRouter.IMAGE_BASE_URL : BSRouter.API_BASE_URL)!.appendingPathComponent(path)
         var URLWithParams = URLComponents(url: URL, resolvingAgainstBaseURL: true)!
-        URLWithParams.queryItems = BSRouter.authorizedParameters
+        URLWithParams.queryItems = params + BSRouter.authorizedParameters
         let request = NSMutableURLRequest(url: URLWithParams.url!)
         request.setValue(Bundle.main.preferredLocalizations.first, forHTTPHeaderField: "Accept-Language")
 
@@ -66,6 +76,7 @@ internal enum BSRouter {
     }
 
     internal static func validateResponse(_ data: Data?, response: URLResponse?) -> NSError? {
+
         if let statusCode = (response as? HTTPURLResponse)?.statusCode {
             if statusCode >= 200 && statusCode < 400 {
                 return data == nil ? BSErrorType.EmptyResponse : nil

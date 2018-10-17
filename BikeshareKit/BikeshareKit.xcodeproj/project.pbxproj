@@ -32,9 +32,11 @@
 		D08AEE491C29CD5A005D6980 /* BSStationsSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */; };
 		D08AEE4B1C29CDA7005D6980 /* BSStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE4A1C29CDA7005D6980 /* BSStation.swift */; };
 		D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */; };
+		D0A7C7092177AF1300A9DBD9 /* BSNearestStationFetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C7082177AF1300A9DBD9 /* BSNearestStationFetchTests.swift */; };
 		D0D323C61C1E257E00B2EA83 /* BikeshareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0D323CD1C1E257E00B2EA83 /* BikeshareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */; };
 		D0D323D21C1E257E00B2EA83 /* BSServicesSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */; };
+		D0E62E842177A42300682FFE /* BSNearestStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E62E832177A42300682FFE /* BSNearestStations.swift */; };
 		D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB083C1C1E2DAB0012739C /* BSManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,13 +78,15 @@
 		D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationsSyncTests.swift; sourceTree = "<group>"; };
 		D08AEE4A1C29CDA7005D6980 /* BSStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStation.swift; sourceTree = "<group>"; };
 		D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSStationSync.swift; sourceTree = "<group>"; };
-		D0B1BD581D1B39FD0032F805 /* BikeshareKit.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BikeshareKit.playground; sourceTree = "<group>"; };
+		D0A7C7082177AF1300A9DBD9 /* BSNearestStationFetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSNearestStationFetchTests.swift; sourceTree = "<group>"; };
+		D0B1BD581D1B39FD0032F805 /* BikeshareKit.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BikeshareKit.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D0D323C21C1E257E00B2EA83 /* BikeshareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BikeshareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323C51C1E257E00B2EA83 /* BikeshareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BikeshareKit.h; sourceTree = "<group>"; };
 		D0D323C71C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0D323CC1C1E257E00B2EA83 /* BikeshareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeshareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSServicesSyncTests.swift; sourceTree = "<group>"; };
 		D0D323D31C1E257E00B2EA83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0E62E832177A42300682FFE /* BSNearestStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSNearestStations.swift; sourceTree = "<group>"; };
 		D0EB083C1C1E2DAB0012739C /* BSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +153,7 @@
 			children = (
 				D08AEE341C25CABD005D6980 /* BSServiceSync.swift */,
 				D08AEE4C1C29FB6F005D6980 /* BSStationSync.swift */,
+				D0E62E832177A42300682FFE /* BSNearestStations.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 				D0D323D11C1E257E00B2EA83 /* BSServicesSyncTests.swift */,
 				D08AEE481C29CD5A005D6980 /* BSStationsSyncTests.swift */,
 				D070EAFB1C2CA5BC00818943 /* BSAvailabilitySyncTests.swift */,
+				D0A7C7082177AF1300A9DBD9 /* BSNearestStationFetchTests.swift */,
 			);
 			path = SyncTests;
 			sourceTree = "<group>";
@@ -360,6 +366,7 @@
 				D08AEE4D1C29FB6F005D6980 /* BSStationSync.swift in Sources */,
 				D0EB083D1C1E2DAB0012739C /* BSManager.swift in Sources */,
 				D070EB381C32E1E400818943 /* BSAvailability.swift in Sources */,
+				D0E62E842177A42300682FFE /* BSNearestStations.swift in Sources */,
 				D024BA341C38808B007CC0E4 /* BSRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +381,7 @@
 				D08AEE491C29CD5A005D6980 /* BSStationsSyncTests.swift in Sources */,
 				D070EB331C32DC4800818943 /* BSPersistentStationsTests.swift in Sources */,
 				D0D323D21C1E257E00B2EA83 /* BSServicesSyncTests.swift in Sources */,
+				D0A7C7092177AF1300A9DBD9 /* BSNearestStationFetchTests.swift in Sources */,
 				D024BA2B1C387DBB007CC0E4 /* TestHelper.swift in Sources */,
 				D08AEE3A1C275716005D6980 /* FixtureHelper.swift in Sources */,
 				D08AEE421C28AB2F005D6980 /* BSServicesKVOTests.swift in Sources */,
