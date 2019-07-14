@@ -19,7 +19,12 @@ class BSNearestStationFetchTests: XCTestCase {
         manager = BSManager()
 
         // mock the resonse from API for stations
-        mockData = try! JSONSerialization.data(withJSONObject: jsonFromFixture("StationsResponse.json") as? NSArray!)
+
+        if let fixture = jsonFromFixture("StationsResponse.json") as? NSArray {
+            do {
+                mockData = try JSONSerialization.data(withJSONObject: fixture)
+            } catch {}
+        }
     }
 
     func testNearestStationReturnsServices() {

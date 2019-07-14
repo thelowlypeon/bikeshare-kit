@@ -119,7 +119,7 @@ open class BSAvailabilityChart: UIView {
         let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
 
         let circle = CAShapeLayer()
-        let path = UIBezierPath(arcCenter: center, radius: innerRadius + (outerRadius - innerRadius) / 2, startAngle: CGFloat(-(M_PI_2 * 3.0)), endAngle: CGFloat(M_PI_2), clockwise: true)
+        let path = UIBezierPath(arcCenter: center, radius: innerRadius + (outerRadius - innerRadius) / 2, startAngle: CGFloat(-((Double.pi / 2) * 3.0)), endAngle: CGFloat(Double.pi / 2), clockwise: true)
 
         circle.fillColor   = UIColor.clear.cgColor
         circle.strokeColor = item.color.cgColor

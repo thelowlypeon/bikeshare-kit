@@ -27,8 +27,10 @@ class BSPersistentStationsTests: XCTestCase {
         let buckingham = BSStation(id: 1, data: ["name": "buckingham"])
         buckingham.availability = BSAvailability(bikes: 1, docks: 11, effectiveDate: Date())
 
-        let data = NSKeyedArchiver.archivedData(withRootObject: buckingham)
-        UserDefaults.standard.set(data, forKey: STATION_KEY)
+        UserDefaults.standard.set(
+            NSKeyedArchiver.archivedData(withRootObject: buckingham),
+            forKey: STATION_KEY
+        )
 
         if let unarchivedStationData = UserDefaults.standard.object(forKey: STATION_KEY) as? Data {
             if let unarchivedStation = NSKeyedUnarchiver.unarchiveObject(with: unarchivedStationData) as? BSStation {

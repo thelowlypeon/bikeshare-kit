@@ -62,9 +62,9 @@ class BSStationsSyncTests: XCTestCase {
         if let buckingham = (self.service.stations.filter{$0 == expectedBuckingham}).first {
             XCTAssertEqual(buckingham.name, expectedBuckingham.name)
             XCTAssertEqual(buckingham.active, expectedBuckingham.active)
-            XCTAssertEqual(buckingham.location!.coordinate.latitude,
+            XCTAssertEqual(buckingham.location?.coordinate.latitude,
                 expectedBuckingham.location!.coordinate.latitude)
-            XCTAssertEqual(buckingham.location!.coordinate.longitude,
+            XCTAssertEqual(buckingham.location?.coordinate.longitude,
                 expectedBuckingham.location!.coordinate.longitude)
             XCTAssertEqual(buckingham.totalDocks, expectedBuckingham.totalDocks)
         } else {

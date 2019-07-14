@@ -19,7 +19,7 @@ class BSServicesSyncTests: XCTestCase {
         manager = BSManager()
 
         // mock the resonse from API for services
-        mockJSON = jsonFromFixture("ServicesResponse.json") as! NSArray
+        mockJSON = jsonFromFixture("ServicesResponse.json") as? NSArray
     }
     
     override func tearDown() {

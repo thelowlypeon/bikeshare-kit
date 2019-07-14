@@ -23,24 +23,24 @@ private let kBSServiceUpdatedAt = "bikeshare_kit__service_updated_at"
 private let kBSServiceStationsKey = "bikeshare_kit__service_stations"
 
 open class BSService: NSObject {
-    internal dynamic var id: Int
+    internal let id: Int
 
-    open dynamic var name: String?
-    open dynamic var city: String?
-    open dynamic var url: URL?
-    open dynamic var color: UIColor = UIColor(red: 0.2, green: 0.7, blue: 0.92, alpha: 1) //default to divvy colors
-    open dynamic var image: UIImage?
+    open var name: String?
+    open var city: String?
+    open var url: URL?
+    open var color: UIColor = UIColor(red: 0.2, green: 0.7, blue: 0.92, alpha: 1) //default to divvy colors
+    open var image: UIImage?
 
-    open dynamic var numberOfDocks: Int = 0
-    open dynamic var numberOfBikesAvailable: Int = 0
-    open dynamic var numberOfDocksAvailable: Int = 0
-    open dynamic var numberOfStations: Int = 0
+    open var numberOfDocks: Int = 0
+    open var numberOfBikesAvailable: Int = 0
+    open var numberOfDocksAvailable: Int = 0
+    open var numberOfStations: Int = 0
 
-    open dynamic var lastUpdatedFromService: Date?
-    open dynamic var updatedAt = Date()
+    open var lastUpdatedFromService: Date?
+    open var updatedAt = Date()
 
-    open dynamic var stationsUpdatedAt: Date?
-    open dynamic var stations = Set<BSStation>()
+    open var stationsUpdatedAt: Date?
+    open var stations = Set<BSStation>()
 
     public init(id: Int, data: NSDictionary) {
         self.id = id
@@ -49,15 +49,12 @@ open class BSService: NSObject {
     }
 
     public convenience init?(data: NSDictionary) {
-        if let _id = data["id"] as? Int {
-            self.init(id: _id, data: data)
-        } else {
-            return nil
-        }
+        guard let id = data["id"] as? Int else { return nil }
+        self.init(id: id, data: data)
     }
 
     // Archiving & Initializers
-    open func encodeWithCoder(_ aCoder: NSCoder) {
+    @objc open func encodeWithCoder(_ aCoder: NSCoder) {
         aCoder.encode(self.id, forKey: kBSServiceIDKey)
         aCoder.encode(self.name, forKey: kBSServiceNameKey)
         aCoder.encode(self.city, forKey: kBSServiceCityKey)
@@ -74,7 +71,7 @@ open class BSService: NSObject {
         aCoder.encode(self.stations, forKey: kBSServiceStationsKey)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         //required fields
         self.id = aDecoder.decodeObject(forKey: kBSServiceIDKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSServiceIDKey)
 
@@ -195,7 +192,7 @@ open class BSService: NSObject {
         return self.name ?? NSLocalizedString("loading...", comment: "Displayed if no name is returned from the API")
     }
 
-    override open var hashValue: Int { return self.id }
+    override open var hash: Int { return self.id }
 
     override open func isEqual(_ object: Any?) -> Bool {
         return self.id == (object as? BSService)?.id
@@ -207,27 +204,23 @@ extension UIColor {
     public convenience init?(hexString: String) {
         let r, g, b, a: CGFloat
 
-        if hexString.hasPrefix("#") {
-            let start = hexString.characters.index(hexString.startIndex, offsetBy: 1)
-            let hexColor = hexString.substring(from: start)
+        guard hexString.hasPrefix("#") else { return nil }
 
-            if hexColor.characters.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
+        let start = hexString.index(hexString.startIndex, offsetBy: 1)
+        let hexColor = String(hexString[start...])
 
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
+        guard hexColor.count == 8 else { return nil }
+
+        let scanner = Scanner(string: hexColor)
+        var hexNumber: UInt64 = 0
+
+        guard scanner.scanHexInt64(&hexNumber) else { return nil }
+
+        r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+        g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+        b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+        a = CGFloat(hexNumber & 0x000000ff) / 255
                     
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            }
-        }
-        
-        //TODO in swift 3, remove this and return nil. known bug https://bugs.swift.org/browse/SR-704
-        self.init(red: 0, green: 0, blue: 1, alpha: 1)
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }

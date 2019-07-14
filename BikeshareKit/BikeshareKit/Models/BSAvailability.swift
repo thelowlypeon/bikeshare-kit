@@ -13,9 +13,9 @@ private let kBSAvailabilityDocksKey = "bikeshare_kit__availability_docks"
 private let kBSAvailabilityEffectiveDateKey = "bikeshare_kit__availability_effective_date"
 
 open class BSAvailability: NSObject {
-    open let bikes: Int
-    open let docks: Int
-    open let effectiveDate: Date
+    public let bikes: Int
+    public let docks: Int
+    public let effectiveDate: Date
     open var effectiveSince: TimeInterval {
         return Date().timeIntervalSince(effectiveDate)
     }
@@ -40,13 +40,13 @@ open class BSAvailability: NSObject {
     }
 
     // Archiving & Initializers
-    open func encodeWithCoder(_ aCoder: NSCoder) {
+    @objc open func encodeWithCoder(_ aCoder: NSCoder) {
         aCoder.encode(self.bikes, forKey: kBSAvailabilityBikesKey)
         aCoder.encode(self.docks, forKey: kBSAvailabilityDocksKey)
         aCoder.encode(self.effectiveDate, forKey: kBSAvailabilityEffectiveDateKey)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         //required fields
         self.bikes = aDecoder.decodeObject(forKey: kBSAvailabilityBikesKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSAvailabilityBikesKey)
         self.docks = aDecoder.decodeObject(forKey: kBSAvailabilityDocksKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSAvailabilityDocksKey)

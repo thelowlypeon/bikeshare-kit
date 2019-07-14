@@ -19,11 +19,11 @@ public enum BikeshareKitConfigOption: String {
 
 open class BSManager: NSObject {
 
-    open dynamic var servicesUpdatedAt: Date?
-    open dynamic var services = Set<BSService>()
-    open dynamic var favoriteService: BSService?
+    @objc open dynamic var servicesUpdatedAt: Date?
+    @objc open dynamic var services = Set<BSService>()
+    @objc open dynamic var favoriteService: BSService?
 
-    open static func configure(_ config: [BikeshareKitConfigOption: Any]) {
+    public static func configure(_ config: [BikeshareKitConfigOption: Any]) {
         if let token = config[.Token] as? String {
             _token = token
         }
@@ -32,7 +32,7 @@ open class BSManager: NSObject {
         }
     }
 
-    open static func sharedManager() -> BSManager {
+    public static func sharedManager() -> BSManager {
         if _manager == nil {
             _manager = BSManager(token: _token)
         }

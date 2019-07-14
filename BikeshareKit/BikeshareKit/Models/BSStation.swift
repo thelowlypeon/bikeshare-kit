@@ -18,22 +18,22 @@ private let kBSStationAvailabilityKey = "bikeshare_kit__station_availability"
 private let kBSStationUpdatedAtKey = "bikeshare_kit__station_updated_at"
 
 open class BSStation: NSObject {
-    internal dynamic var id: Int
+    internal let id: Int
+    open var location: CLLocation?
 
-    open dynamic var active: Bool = false
-    open dynamic var name: String?
-    open dynamic var totalDocks: Int = 0
-    open dynamic var inactiveDocks: Int {
+    open var active: Bool = false
+    open var name: String?
+    open var totalDocks: Int = 0
+    open var inactiveDocks: Int {
         get {
             return self.availability != nil ?
                 totalDocks - (self.availability!.bikes + self.availability!.docks)
                 : 0
         }
     }
-    open dynamic var location: CLLocation?
-    open dynamic var availability: BSAvailability?
+    open var availability: BSAvailability?
 
-    open dynamic var updatedAt = Date()
+    open var updatedAt = Date()
 
     public init(id: Int, data: NSDictionary) {
         self.id = id
@@ -42,15 +42,12 @@ open class BSStation: NSObject {
     }
 
     public convenience init?(data: NSDictionary) {
-        if let _id = data["id"] as? Int {
-            self.init(id: _id, data: data)
-        } else {
-            return nil
-        }
+        guard let id = data["id"] as? Int else { return nil }
+        self.init(id: id, data: data)
     }
 
     // Archiving & Initializers
-    open func encodeWithCoder(_ aCoder: NSCoder) {
+    @objc open func encodeWithCoder(_ aCoder: NSCoder) {
         aCoder.encode(self.id, forKey: kBSStationIDKey)
         aCoder.encode(self.active, forKey: kBSStationActiveKey)
         aCoder.encode(self.name, forKey: kBSStationNameKey)
@@ -60,7 +57,7 @@ open class BSStation: NSObject {
         aCoder.encode(self.updatedAt, forKey: kBSStationUpdatedAtKey)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         //required fields
         self.id = aDecoder.decodeObject(forKey: kBSStationIDKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSStationIDKey)
 
@@ -70,8 +67,8 @@ open class BSStation: NSObject {
         self.totalDocks = aDecoder.decodeObject(forKey: kBSStationTotalDocksKey) as? Int ?? aDecoder.decodeInteger(forKey: kBSStationTotalDocksKey)
 
         //optional fields
-        self.name = aDecoder.decodeObject(forKey: kBSStationNameKey) as? String
         self.location = aDecoder.decodeObject(forKey: kBSStationLocationKey) as? CLLocation
+        self.name = aDecoder.decodeObject(forKey: kBSStationNameKey) as? String
         self.availability = aDecoder.decodeObject(forKey: kBSStationAvailabilityKey) as? BSAvailability
 
         super.init()
@@ -86,11 +83,11 @@ open class BSStation: NSObject {
         if active != _active {
             self.active = _active
         }
-        let _latitude = data["latitude"] as? Double
-        let _longitude = data["longitude"] as? Double
-        let loc: CLLocation? = _latitude != nil && _longitude != nil ? CLLocation(latitude: _latitude!, longitude: _longitude!) : nil
-        if loc?.coordinate.latitude != self.location?.coordinate.latitude || loc?.coordinate.longitude != self.location?.coordinate.longitude {
-            self.location = loc
+        if let latitude = data["latitude"] as? Double, let longitude = data["longitude"] as? Double {
+            let loc = CLLocation(latitude: latitude, longitude: longitude)
+            if loc.coordinate.latitude != self.location?.coordinate.latitude || loc.coordinate.longitude != self.location?.coordinate.longitude {
+                self.location = loc
+            }
         }
         let _totalDocks = (data["total_docks"] as? Int) ?? 0
         if totalDocks != _totalDocks {
@@ -130,7 +127,7 @@ open class BSStation: NSObject {
         return self.name ?? NSLocalizedString("loading...", comment: "Displayed if the API doesn't return a name for this station")
     }
 
-    override open var hashValue: Int { return self.id }
+    override open var hash: Int { return self.id }
 
     override open func isEqual(_ object: Any?) -> Bool {
         return self.id == (object as? BSStation)?.id
